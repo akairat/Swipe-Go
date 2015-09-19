@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
 
         like_button = (ImageButton) findViewById(R.id.like_button);
         like_button.setOnClickListener(new View.OnClickListener(){
