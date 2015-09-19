@@ -4,4 +4,7 @@
 /.idea/libraries
 .DS_Store
 /build
-/captures
+/capture
+.idea/modules.xmls
+Scream.iml
+/app/app.iml

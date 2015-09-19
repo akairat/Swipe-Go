@@ -7,8 +7,12 @@ package com.team_scream_mit.scream;
 import android.app.Application;
 import android.os.AsyncTask;
 
+import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 
 import org.json.JSONArray;
@@ -34,7 +38,7 @@ public class App extends Application
 
         Parse.initialize(this, "pP3u9MjdKTh8xGTZLp5DFnaHtPqJNMovWp34ZCsR", "mAK6zP3JD8D8z9EbFsOK8DcW1zA2xOr9FL7XmnxH");
 
-        getMITEvents();
+        //getMITEvents();
     }
 
 
@@ -49,6 +53,37 @@ public class App extends Application
         new_user.put("name", name);
         new_user.put("email", email);
         new_user.saveInBackground();
+    }
+
+
+    public void addNewEvent(JSONObject event){
+        final ParseObject new_event = new ParseObject("events");
+
+        // fields that are not required
+        try {
+            new_event.put("url", event.getString("url"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            new_event.put("description", event.getString("description"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            //required fields
+            new_event.put("title", event.getString("title"));
+            new_event.put("location", event.getString("title"));
+            new_event.put("start", event.getInt("start"));
+            new_event.put("end", event.getInt("end"));
+            new_event.put("category", event.getString("category"));
+            new_event.put("contact", event.getString("contact"));
+            new_event.saveInBackground();
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        new_event.saveInBackground();
     }
 
     private void getMITEvents(){
