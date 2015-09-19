@@ -16,11 +16,20 @@
 
 
     <string-array name="Categories">
-        <item name="infoSessions">Info Sessions</item>
-        <item name="seminars">Seminars</item>
+        <item name="studyBreaks">Concerts</item>
         <item name="concerts">Concerts</item>
         <item name="parties">Parties</item>
+        <item name="infoSessions">Info Sessions</item>
+        <item name="seminars">Seminars</item>
     </string-array>
+
+    <string name="studyBreaks">Concerts</string>
+    <string name="concerts">Concerts</string>
+    <string name="parties">Parties</string>
+    <string name="infoSessions">Info Sessions</string>
+    <string name="seminars">Seminars</string>
+
+
     <string name="AddEventTitle">Event title</string>
     <string name="AddEventDescriptionHint">Event description</string>
     <string name="createEvent">Create event</string>
