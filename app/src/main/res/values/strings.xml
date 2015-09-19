@@ -10,4 +10,23 @@
     <string name="title_activity_add_event">AddEventActivity</string>
     <string name="title_activity_about">AboutActivity</string>
     <string name="title_activity_preferences">PreferencesActivity</string>
+
+
+    <string-array name="Categories">
+        <item name="infoSessions">Info Sessions</item>
+        <item name="seminars">Seminars</item>
+        <item name="concerts">Concerts</item>
+        <item name="parties">Parties</item>
+    </string-array>
+    <string name="AddEventTitle">Event title</string>
+    <string name="AddEventDescriptionHint">Event description</string>
+    <string name="createEvent">Create event</string>
+    <string name="AddEventLocation">Location:</string>AddEventContact
+    <string name="AddEventDate">Date:</string>
+    <string name="AddEventStartTime">Time:</string>
+    <string name="AddEventEndTime">End time:</string>
+    <string name="AddEventOpenTo">Open to</string>
+    <string name="AddEventSponsor">Sponsor</string>
+    <string name="AddEventContact">Contact:</string>
+    <string name="categoryType">Please choose your event category</string>
 </resources>
