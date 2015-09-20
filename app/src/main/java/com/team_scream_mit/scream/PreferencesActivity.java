@@ -1,5 +1,7 @@
 package com.team_scream_mit.scream;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,13 +12,21 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class PreferencesActivity extends AppCompatActivity {
+
+    private SharedPreferences preferenceSettings;
+    private SharedPreferences.Editor preferencesEditor;
+    private static final int PREFERENCE_MODE_PRIVATE = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preferences);
+        preferenceSettings = getPreferences(PREFERENCE_MODE_PRIVATE);
+        preferencesEditor = preferenceSettings.edit();
     }
 
     @Override
@@ -47,7 +57,7 @@ public class PreferencesActivity extends AppCompatActivity {
 
 
         //Event types (order of lists matter!!)
-        ArrayList<String> selectedEvents = new ArrayList<String>();
+        Set<String> selectedCategories = new HashSet<String>();
         ArrayList<String> eventTypes = new ArrayList<String>(
                 Arrays.asList("studyBreak","concert","party", "seminar", "infoSession"));
         ArrayList<Integer> eventIDs = new ArrayList<Integer>(
@@ -57,13 +67,13 @@ public class PreferencesActivity extends AppCompatActivity {
         for (int i = 0; i< eventTypes.size(); i++){
             final CheckBox checkBox = (CheckBox) findViewById(eventIDs.get(i));
             if (checkBox.isChecked()){
-                selectedEvents.add(eventTypes.get(i));
+                selectedCategories.add(eventTypes.get(i));
             }
         }
 
         //Event day range
         final EditText dateDayField = (EditText) findViewById(R.id.preferenceTimeRange);
-        int dateDay = Integer.parseInt(dateDayField.getText().toString());
+        int daysFromToday = Integer.parseInt(dateDayField.getText().toString());
 
 
         //Start time
@@ -81,8 +91,16 @@ public class PreferencesActivity extends AppCompatActivity {
         final EditText endTimeMinField = (EditText) findViewById(R.id.preferenceEndTimeMin);
         int endTimeMin = Integer.parseInt(endTimeMinField.getText().toString() );
 
+        preferencesEditor.putInt("daysFromToday", daysFromToday);
+        preferencesEditor.putInt("startTimeHour", startTimeHour);
+        preferencesEditor.putInt("startTimeMin", startTimeMin);
+        preferencesEditor.putInt("endTimeHour", endTimeHour);
+        preferencesEditor.putInt("endTimeMin", endTimeMin);
+        preferencesEditor.putStringSet("selectedCategories", selectedCategories);
+        preferencesEditor.commit();
 
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
 
-        //TODO: SEND TO SERVER
     }
 }
