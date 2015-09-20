@@ -284,8 +284,8 @@ public class MainActivity extends AppCompatActivity {
             return true;
         } else if (id == R.id.logout){
             if (parseApp.mGoogleApiClient.isConnected()) {
-                Log.e(LOG_MESSAGE, "heloohoooo");
                 Plus.AccountApi.clearDefaultAccount(parseApp.mGoogleApiClient);
+                Log.e(LOG_MESSAGE, "heloohoooo");
                 parseApp.mGoogleApiClient.disconnect();
                 parseApp.mGoogleApiClient.connect();
                 parseApp.clearUserName(this);

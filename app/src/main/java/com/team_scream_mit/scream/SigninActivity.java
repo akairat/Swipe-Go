@@ -64,6 +64,7 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         app = (App) getApplication();
+
         // Initializing google plus api client
         app.mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
