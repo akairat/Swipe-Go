@@ -220,10 +220,6 @@ public class MainActivity extends AppCompatActivity {
         return new ArrayList<String>(Arrays.asList(cats));
     }
 
-    private int defaultDaysFromToday(){
-        return 5;
-    }
-
 
     /**
      *
