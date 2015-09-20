@@ -4,7 +4,9 @@
 
     <style name="BarWithLogoTheme"
         parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:background">@color/white</item>
         <item name="android:actionBarStyle">@style/ActionBarTheme</item>
+        <item name="android:textColor">#6A0888</item>
     </style>
 
     <style name="ActionBarTheme"
