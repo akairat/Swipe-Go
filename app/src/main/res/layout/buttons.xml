@@ -9,18 +9,22 @@
 
     <ImageButton
         android:layout_width="130dp"
-        android:layout_marginLeft="70px"
+        android:layout_marginTop="10px"
+        android:layout_marginLeft="60px"
         android:layout_height="100dp"
         android:background="#F5EFFB"
-        android:src="@drawable/red_cross_icon3"
+        android:layout_weight="0.31"
+        android:src="@drawable/red_cross_button2"
         android:scaleType="centerInside"
+
         android:id="@+id/dislike_button" />
 
     <ImageButton
         android:layout_width="130dp"
-        android:layout_marginLeft="40px"
+        android:layout_marginTop="10px"
+        android:layout_marginLeft="50px"
         android:layout_height="100dp"
-        android:src="@drawable/green_ok_icon3"
+        android:src="@drawable/green_ok_button2"
         android:scaleType="centerInside"
         android:background="#F5EFFB"
         android:id="@+id/like_button"
