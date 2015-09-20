@@ -4,10 +4,9 @@
     android:layout_gravity="center"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#FFFFFF"
     android:orientation="vertical">
 
-    <LinearLayout
+<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -15,16 +14,16 @@
 
         <TextView
             android:id="@+id/event_title_id"
-            android:textSize="40sp"
-            android:textColor="#A31F34"
-            android:background="#FFFFFF"
+            android:background="#E3CEF6"
+            android:padding="20px"
+            android:textSize="30sp"
+            android:textColor="#443266"
             android:textStyle="bold"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Yelp Tech Talk"
-            android:layout_margin="6dp" />
+            android:text="Eastgate Book Club, Sunday, September 27, 15:00-16:00, Eastgate Penthouse Room number E-55"
+            />
 
     </LinearLayout>
 
