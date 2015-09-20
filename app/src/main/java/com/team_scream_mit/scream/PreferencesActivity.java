@@ -28,7 +28,7 @@ public class PreferencesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preferences);
         //preferenceSettings = getPreferences(PREFERENCE_MODE_PRIVATE);
-        preferenceSettings = PreferenceManager.getDefaultSharedPreferences(this);
+        preferenceSettings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         preferencesEditor = preferenceSettings.edit();
 
         parseApp = (App) getApplication();

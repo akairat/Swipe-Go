@@ -31,7 +31,7 @@
         </activity>
         <activity
             android:name=".AddEventActivity"
-            android:label="Create Event" >
+            android:label="Create Event">
         </activity>
         <activity
             android:name=".AboutActivity"
