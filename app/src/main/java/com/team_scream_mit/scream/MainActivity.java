@@ -32,10 +32,16 @@ import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private App parseApp;
+
+    private ArrayList<String> searchCategories;
 
     private ArrayList<String> event_titles;
     private ArrayList<String> event_locations;
@@ -43,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
     private int event_index;
     private Date event_start_time;
     private Date event_end_time;
-    private String time_range = "?start=2015-09-19&end=2015-09-25";
     private ArrayAdapter<String> arrayAdapter;
 
     SwipeFlingAdapterView flingContainer;
@@ -51,27 +56,38 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton dislike_button;
 
     private String LOG_MESSAGE = "-KAIRAT-";
-    private String serviceAPI = "http://m.mit.edu/apis/calendars/events_calendar/events/";
-    private String apiUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
+        searchCategories = getDefaultCategories();
 
         like_button = (ImageButton) findViewById(R.id.like_button);
         like_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                right();
+                rightSwipe();
             }
         });
         dislike_button = (ImageButton) findViewById(R.id.dislike_button);
         dislike_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                left();
+                leftSwipe();
             }
         });
+
+        // If new preferences have been applied.
+        Intent intent = getIntent();
+        // time_range should be formatted properly i.e. ?start=2013-02-23&end=2013-02-23
+        if (intent.getExtras() != null){
+            // format of the string is the following - yyyy-MM-dd'T'HH:mm:ss
+            String start_string = intent.getStringExtra("start_time");
+            String end_string = intent.getStringExtra("end_time");
+            event_start_time = convertStringToDate(start_string);
+            event_end_time = convertStringToDate(end_string);
+        }
+
 
         String a = "<h1>Yelp Tech Talk</h1>\n<h2>Date/Time:</h2>\n" +
                 "<p>Thursday, February 5, 2015 - 5:30pm</p>\n" +
@@ -82,6 +98,14 @@ public class MainActivity extends AppCompatActivity {
 
         arrayAdapter = new ArrayAdapter<>(this, R.layout.card, R.id.event_title_id, event_titles);
 
+
+        parseApp = (App) getApplication();
+//        parseApp.getAllEvents(user_email,
+//        final ArrayList<String> categories,
+//        final int days_from_today,
+//        final int time_range_from,
+//        final int time_range_to,
+//        final CallbackInterface callback);
 
         flingContainer.setAdapter(arrayAdapter);
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
@@ -140,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
 
 
    // @OnClick(R.id.right)
-    public void right() {
+    public void rightSwipe() {
         /**
          * Trigger the right event manually.
          */
@@ -148,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //@OnClick(R.id.left)
-    public void left() {
+    public void leftSwipe() {
         flingContainer.getTopCardListener().selectLeft();
     }
 
@@ -175,6 +199,39 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     *
+     * @return default categories - all
+     */
+    private ArrayList<String> getDefaultCategories(){
+        String[] cats = {"Tech Talks", "Study Breaks", "Parties", "Info Sessions"};
+        return new ArrayList<String>(Arrays.asList(cats));
+    }
+
+
+    /**
+     *
+     * @param string_date format - yyyy-MM-dd'T'HH:mm:ss
+     * @return Date object
+     */
+    private Date convertStringToDate(String string_date){
+        Date converted_date = null;
+        SimpleDateFormat simple_date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+
+        Log.e(LOG_MESSAGE, "simple_date is null");
+
+        try {
+            converted_date = simple_date.parse(string_date);
+        } catch (ParseException e) {
+            Log.e(LOG_MESSAGE, string_date);
+            e.printStackTrace();
+        }
+
+        if (converted_date == null){
+            Log.e(LOG_MESSAGE, "Could not convert string to date object: " + string_date);
+        }
+        return converted_date;
+    }
 
     ///////////////////////////////// OLD CODE /////////////////////////////////////////
 

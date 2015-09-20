@@ -81,8 +81,8 @@ public class App extends Application
     protected void getAllEvents(String user_email,
                              final ArrayList<String> categories,
                              final int days_from_today,
-                             final int time_range_from,
-                             final int time_range_to,
+                             final double time_range_from,
+                             final double time_range_to,
                              final CallbackInterface callback){
 
         ParseQuery query = new ParseQuery("users");
@@ -108,8 +108,8 @@ public class App extends Application
                     c.set(Calendar.MILLISECOND, 0);
                     Date today = c.getTime(); //the midnight, that's the first second of the day.
                     long date_range_from_today = today.getTime(); //IN SECONDS
-                    long from = date_range_from_today + days_from_today * days_to_sec + time_range_from * hours_to_sec;
-                    long to = date_range_from_today + days_from_today * days_to_sec + time_range_to * hours_to_sec;
+                    double from = date_range_from_today + days_from_today * days_to_sec + time_range_from * hours_to_sec;
+                    double to = date_range_from_today + days_from_today * days_to_sec + time_range_to * hours_to_sec;
 
                     query.whereContainedIn("category", categories);
                     query.whereNotContainedIn("objectId", added_events);

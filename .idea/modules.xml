@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Scream.iml" filepath="$PROJECT_DIR$/Scream.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ScreamNew.iml" filepath="$PROJECT_DIR$/ScreamNew.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
