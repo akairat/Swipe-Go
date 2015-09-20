@@ -64,6 +64,12 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        app = (App) getApplication();
+        if (app.userName != null) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
         setContentView(R.layout.activity_signin);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.drawable.icon_label);
@@ -79,8 +85,6 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
         btnSignOut.setOnClickListener(this);
         btnRevokeAccess.setOnClickListener(this);
 
-        app = (App) getApplication();
-
         // Initializing google plus api client
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -89,6 +93,7 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
     }
 
     protected void onStart() {
+        Log.e(TAG, "Name: " + 2);
         super.onStart();
         mGoogleApiClient.connect();
     }
@@ -183,6 +188,8 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
                 String personPhotoUrl = currentPerson.getImage().getUrl();
                 app.userEmail = currentPerson.getUrl();
 
+                app.addNewUser(app.userName, app.userEmail);
+
                 Log.e(TAG, "Name: " + app.userName + ", plusProfile: " + app.userEmail
                         + ", Image: " + personPhotoUrl);
 
@@ -245,10 +252,10 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
         if (isSignedIn) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+            finish();
         } else {
             btnSignIn.setVisibility(View.VISIBLE);
             btnSignOut.setVisibility(View.GONE);
-            btnRevokeAccess.setVisibility(View.GONE);
             llProfileLayout.setVisibility(View.GONE);
         }
     }
@@ -281,7 +288,7 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
     /**
      * Sign-out from google
      * */
-    private void signOutFromGplus() {
+    public void signOutFromGplus() {
         if (mGoogleApiClient.isConnected()) {
             Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
             mGoogleApiClient.disconnect();
