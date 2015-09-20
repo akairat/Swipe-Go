@@ -1,9 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:padding="60px"
     tools:context="com.team_scream_mit.scream.PreferencesActivity">
 
     <LinearLayout
@@ -21,44 +19,93 @@
         android:text="Event types:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="10pt"/>
-        <CheckBox android:id="@+id/preferenceStudyBreak"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/studyBreaks"
-            android:checked="true"/>
-
-        <CheckBox android:id="@+id/preferenceConcert"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/concerts"
-            android:checked="true"/>
-        <CheckBox android:id="@+id/preferenceParty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/parties"
-            android:checked="true"/>
-        <CheckBox android:id="@+id/preferenceInfoSession"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/infoSessions"
-            android:checked="true"/>
-
-        <CheckBox android:id="@+id/preferenceSeminar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/seminars"
-            android:checked="true"/>
-
-        <TextView
-            android:text="Day range:"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="8pt"/>
+        android:textSize="9pt"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="60px"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20px"
+                android:orientation="vertical">
+                <TextView
+                    android:text="@string/studyBreaks"
+                    android:textSize="@dimen/preference_text_size"
+                    android:layout_margin="@dimen/preference_text_margin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:text="@string/concerts"
+                    android:layout_margin="@dimen/preference_text_margin"
+                    android:textSize="@dimen/preference_text_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:text="@string/parties"
+                    android:textSize="@dimen/preference_text_size"
+                    android:layout_margin="@dimen/preference_text_margin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:text="@string/infoSessions"
+                    android:textSize="@dimen/preference_text_size"
+                    android:layout_margin="@dimen/preference_text_margin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:text="@string/seminars"
+                    android:textSize="@dimen/preference_text_size"
+                    android:layout_margin="@dimen/preference_text_margin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20px"
+                android:orientation="vertical">
+                <CheckBox android:id="@+id/preferenceStudyBreak"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"/>
+                <CheckBox android:id="@+id/preferenceConcert"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"/>
+                <CheckBox android:id="@+id/preferenceParty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"/>
+                <CheckBox android:id="@+id/preferenceInfoSession"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"/>
+
+                <CheckBox android:id="@+id/preferenceSeminar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+        <TextView
+            android:text="Day range:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="9pt"/>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="60px"
             android:orientation="horizontal">
             <TextView
                 android:text="  within   "
@@ -82,17 +129,22 @@
             android:text="Time range (defualt all):"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="8pt"/>
+            android:textSize="9pt"/>
 
+    <LinearLayout
+        android:layout_width="234dp"
+        android:layout_height="wrap_content"
+        android:paddingLeft="80px"
+        android:orientation="vertical">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:layout_width="150px"
+                android:layout_width="120px"
                 android:layout_height="@dimen/add_event_row"
                 android:textSize="8pt"
-                android:text="      from:"/>
+                android:text="from:"/>
 
             <EditText
                 android:id="@+id/preferenceStartTimeHour"
@@ -116,10 +168,10 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:layout_width="150px"
+                android:layout_width="120px"
                 android:layout_height="@dimen/add_event_row"
                 android:textSize="8pt"
-                android:text="      to:"/>
+                android:text="to:"/>
             <EditText
                 android:id="@+id/preferenceEndTimeHour"
                 android:layout_height="@dimen/add_event_row"
@@ -137,13 +189,18 @@
                 android:layout_width="fill_parent">
             </EditText>
         </LinearLayout>
+    </LinearLayout>
         <Button
             android:id="@+id/updatePreference"
-            android:layout_height="wrap_content"
-            android:text="@string/createEvent"
             android:onClick="updatePreference"
-            android:layout_width="fill_parent">
-        </Button>
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Update event filter"
+            android:textSize="20dp"
+            android:textColor="@color/white"
+            android:background="#9370DB"
+            />
 
     </LinearLayout>
 

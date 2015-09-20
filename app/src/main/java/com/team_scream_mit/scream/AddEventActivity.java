@@ -86,8 +86,6 @@ public class AddEventActivity extends AppCompatActivity {
         final EditText contactField = (EditText) findViewById(R.id.contact);
         String contact = contactField.getText().toString();
 
-
-
         //TODO: SEND TO SERVER
     }
 }

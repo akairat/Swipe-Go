@@ -16,14 +16,14 @@
 
 
     <string-array name="Categories">
-        <item name="studyBreaks">Concerts</item>
+        <item name="studyBreaks">Study breaks</item>
         <item name="concerts">Concerts</item>
         <item name="parties">Parties</item>
         <item name="infoSessions">Info Sessions</item>
         <item name="seminars">Seminars</item>
     </string-array>
 
-    <string name="studyBreaks">Concerts</string>
+    <string name="studyBreaks">Study breaks</string>
     <string name="concerts">Concerts</string>
     <string name="parties">Parties</string>
     <string name="infoSessions">Info Sessions</string>
