@@ -31,8 +31,8 @@
     <string name="seminars">Seminars</string>
 
 
-    <string name="AddEventTitle">Event title</string>
-    <string name="AddEventDescriptionHint">Event description</string>
+    <string name="AddEventTitle">Title</string>
+    <string name="AddEventDescriptionHint">Description</string>
     <string name="createEvent">Create event</string>
     <string name="AddEventLocation">Location:</string>AddEventContact
     <string name="AddEventDate">Date:</string>
