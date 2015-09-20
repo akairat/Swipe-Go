@@ -135,8 +135,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadCards(){
         arrayAdapter = new ArrayAdapter<>(this, R.layout.card, R.id.event_title_id, eventsArray);
+        Log.i(LOG_MESSAGE, arrayAdapter.toString());
 
         flingContainer.setAdapter(arrayAdapter);
+
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
@@ -152,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
                 //Do something on the left!
                 //You also have access to the original object.
                 //If you want to use it just cast it (String) dataObject
-                //makeToast(MainActivity.this, "Left!");
+                makeToast(MainActivity.this, "Left!");
             }
 
             @Override
@@ -340,6 +342,7 @@ public class MainActivity extends AppCompatActivity {
                     eventIds.add(eventId);
                 }
                 progress.dismiss();
+                Log.i(LOG_MESSAGE, eventsArray.toString());
                 loadCards();
             }
         }
@@ -399,7 +402,7 @@ public class MainActivity extends AppCompatActivity {
         String weekdayName = "Wrong";
         DateFormatSymbols dfs = new DateFormatSymbols();
         String[] weekdays = dfs.getWeekdays();
-        if (weekdayNum >= 0 && weekdayNum <= 6){
+        if (weekdayNum >= 1 && weekdayNum <= 7){
             weekdayName = weekdays[weekdayNum];
         } else {
             Log.e(LOG_MESSAGE, "Wrong weekday number: " + weekdayNum);
