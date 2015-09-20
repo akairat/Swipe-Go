@@ -22,6 +22,11 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:23.0.1'
-    compile 'com.google.android.gms:play-services:7.5.0'
     compile 'com.lorentzos.swipecards:library:1.0.9@aar'
+    compile 'com.google.apis:google-api-services-calendar:v3-rev84-1.18.0-rc'
+    compile 'com.parse.bolts:bolts-android:1.+'
+    compile fileTree(dir: 'libs', include: 'Parse-*.jar')
+    compile 'com.google.android.gms:play-services:7.5.0'
 }
+
+
