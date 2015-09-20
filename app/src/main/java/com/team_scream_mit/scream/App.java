@@ -5,6 +5,7 @@ package com.team_scream_mit.scream;
  */
 
 import android.app.Application;
+import android.util.Log;
 
 
 import com.parse.FindCallback;
@@ -107,10 +108,14 @@ public class App extends Application
 
             @Override
             public void done(ParseObject user, ParseException e) {
+                if (e != null){
+                    System.err.println("User wasn't found while fetching events");
+                }
                 if (user != null && e == null) {
                     //Get the list of events that already have been added
                     ArrayList<String> added_events = (ArrayList<String>) user.get("added_events");
-
+                    Log.i("Dana tag", "GOT SOME USER");
+                    Log.i("Dana tag", user.get("name").toString());
 
                     long hours_to_sec = 60 * 60;
                     long days_to_sec = 24 * hours_to_sec;
@@ -135,6 +140,7 @@ public class App extends Application
                         @Override
                         public void done(List<ParseObject> list, ParseException e) {
                             if (e != null) {
+                                System.err.println("Didn't find any events or error");
                                 System.err.println("ParseException: " + e.getMessage());
                             } else {
                                 // results have all the Posts the current user liked.
