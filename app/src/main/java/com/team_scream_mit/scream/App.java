@@ -41,12 +41,25 @@ public class App extends Application
     }
 
 
-    protected void addNewUser(String name, String email)
+    protected void addNewUser(final String name, final String email)
     {
-        ParseObject new_user = new ParseObject("users");
-        new_user.put("name", name);
-        new_user.put("email", email);
-        new_user.saveInBackground();
+        ParseQuery query = new ParseQuery("users");
+        query.whereEqualTo("email", email);
+        query.getFirstInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject parseObject, ParseException e) {
+                if (e == null) {
+                    System.err.println("Such user exists");
+                } else {
+                    // results have all the Posts the current user liked.
+                    ParseObject new_user = new ParseObject("users");
+                    new_user.put("name", name);
+                    new_user.put("email", email);
+                    new_user.saveInBackground();
+                }
+            }
+        });
+
     }
 
 
