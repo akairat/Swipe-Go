@@ -1,5 +1,6 @@
 package com.team_scream_mit.scream;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -30,8 +31,22 @@ public class AddEventActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.create_event) {
+            return true;
+        } else if (id == R.id.change_preferences){
+            Intent i = new Intent(this, PreferencesActivity.class);
+            startActivity(i);
+            return true;
+        } else if (id == R.id.about){
+            Intent i = new Intent(this, AboutActivity.class);
+            startActivity(i);
+            return true;
+        } else if (id == R.id.logout){
+            //signoutFromApp();
+            return true;
+        } else if (id == R.id.main_screen){
+            Intent i = new Intent(this, MainActivity.class);
+            startActivity(i);
             return true;
         }
 

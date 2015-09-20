@@ -1,10 +1,36 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+
+
     <item
-        android:id="@+id/action_settings"
-        android:title="@string/action_settings"
+        android:id="@+id/create_event"
+        android:title="@string/createEvent"
+        android:orderInCategory="2"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/change_preferences"
+        android:title="Event Preferences"
+        android:orderInCategory="3"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/logout"
+        android:title="Logout"
         android:orderInCategory="100"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/about"
+        android:title="About App"
+        android:orderInCategory="4"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/main_screen"
+        android:title="Swipe>>Go"
+        android:orderInCategory="1"
         app:showAsAction="never" />
 
 </menu>

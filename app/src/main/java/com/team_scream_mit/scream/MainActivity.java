@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private String userEmail;
 
     // 5, 9 and 9 are default values
-    private int daysFromToday = 5;
+    private int daysFromToday = 7;
     private double timeRangeFrom = 9.00;
     private double timeRangeTo = 21.00;
     private ArrayList<String> searchCategories;
@@ -103,6 +103,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // initialize the variables
+        eventsArray = new ArrayList<>();
+        eventIds = new ArrayList<>();
 
         parseApp = (App) getApplication();
         CallbackInterface callbackHandler = new DataReception();
@@ -230,11 +233,24 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.create_event) {
+            Intent i = new Intent(this, AddEventActivity.class);
+            startActivity(i);
+            return true;
+        } else if (id == R.id.change_preferences){
+            Intent i = new Intent(this, PreferencesActivity.class);
+            startActivity(i);
+            return true;
+        } else if (id == R.id.about){
+            Intent i = new Intent(this, AboutActivity.class);
+            startActivity(i);
+            return true;
+        } else if (id == R.id.logout){
+            //signoutFromApp();
+            return true;
+        } else if (id == R.id.main_screen){
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -300,8 +316,12 @@ public class MainActivity extends AppCompatActivity {
             String eventText;
             if (events.size() == 0){
                 progress.dismiss();
+                like_button.setEnabled(false);
+                dislike_button.setEnabled(false);
                 showAlertDialog();
             } else {
+                like_button.setEnabled(true);
+                dislike_button.setEnabled(true);
                 for (int i = 0; i < events.size(); i++) {
                     ParseObject entry = events.get(i);
                     String eventTitle = entry.getString("title");
