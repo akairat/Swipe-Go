@@ -26,66 +26,6 @@
             android:text="Yelp Tech Talk"
             android:layout_margin="6dp" />
 
-        <TextView
-            android:textSize="40sp"
-            android:textColor="@android:color/black"
-            android:background="#FFFFFF"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:text="Date/Time:"
-            android:layout_margin="6dp"/>
-
-        <TextView
-            android:id="@+id/event_time_id"
-            android:textSize="30sp"
-            android:textColor="#A31F34"
-            android:background="#FFFFFF"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Thursday, February 5, 2015 - 5:30pm"
-            android:width="50dp"
-            android:layout_margin="6dp"/>
-
-        <TextView
-            android:textSize="40sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/black"
-            android:background="#FFFFFF"
-            android:gravity="center"
-            android:text="Location:"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_margin="6dp"/>
-
-        <TextView
-            android:id="@+id/event_location_id"
-            android:textSize="30sp"
-            android:textColor="#A31F34"
-            android:background="#FFFFFF"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Goodell Hall, 5th floor lounge"
-            android:layout_margin="6dp"/>
-
-        <View
-            android:id="@+id/item_swipe_left_indicator"
-            android:alpha="0"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="30dp"
-            android:background="#98ff98" />
-
-        <View
-            android:id="@+id/item_swipe_right_indicator"
-            android:alpha="0"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="30dp"
-            android:layout_gravity="right" />
     </LinearLayout>
 
 </LinearLayout>

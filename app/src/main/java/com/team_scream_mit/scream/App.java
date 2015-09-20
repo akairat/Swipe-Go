@@ -160,8 +160,10 @@ public class App extends Application
                     c.set(Calendar.MILLISECOND, 0);
                     Date today = c.getTime(); //the midnight, that's the first second of the day.
                     long date_range_from_today = today.getTime(); //IN SECONDS
-                    double from = date_range_from_today + days_from_today * days_to_sec + time_range_from * hours_to_sec;
-                    double to = date_range_from_today + days_from_today * days_to_sec + time_range_to * hours_to_sec;
+                    double from_d = (date_range_from_today/1000 + days_from_today * days_to_sec + time_range_from * hours_to_sec);
+                    double to_d = (date_range_from_today/1000 + days_from_today * days_to_sec + time_range_to * hours_to_sec);
+                    long from = (long) from_d;
+                    long to = (long) to_d;
 
                     query.whereContainedIn("category", categories);
                     query.whereNotContainedIn("objectId", added_events);
