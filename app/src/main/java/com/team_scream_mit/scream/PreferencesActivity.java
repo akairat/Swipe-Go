@@ -10,9 +10,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.TimePicker;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,6 +27,14 @@ public class PreferencesActivity extends AppCompatActivity {
     // private static final int PREFERENCE_MODE_PRIVATE = 0;
     private App parseApp;
 
+    private TimePicker tp1;
+    private TimePicker tp2;
+    private int startTimeHour;
+    private int startTimeMin;
+    private int endTimeHour;
+    private int endTimeMin;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +44,28 @@ public class PreferencesActivity extends AppCompatActivity {
         preferencesEditor = preferenceSettings.edit();
 
         parseApp = (App) getApplication();
+
+        tp1 = (TimePicker) findViewById(R.id.preferenceStartTimeSpinner);
+        tp1.setIs24HourView(true);
+        tp1.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+                //Display the new time to app interface
+                startTimeHour = hourOfDay;
+                startTimeMin = minute;
+            }
+        });
+
+        tp2 = (TimePicker) findViewById(R.id.preferenceEndTimeSpinner);
+        tp2.setIs24HourView(true);
+        tp2.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+                //Display the new time to app interface
+                endTimeHour = hourOfDay;
+                endTimeMin = minute;
+            }
+        });
     }
 
     @Override
@@ -94,22 +128,6 @@ public class PreferencesActivity extends AppCompatActivity {
         //Event day range
         final EditText dateDayField = (EditText) findViewById(R.id.preferenceTimeRange);
         int daysFromToday = Integer.parseInt(dateDayField.getText().toString());
-
-
-        //Start time
-        final EditText startTimeHourField = (EditText) findViewById(R.id.preferenceStartTimeHour);
-        int startTimeHour = Integer.parseInt( startTimeHourField.getText().toString() );
-
-        final EditText startTimeMinField = (EditText) findViewById(R.id.preferenceStartTimeMin);
-        int startTimeMin = Integer.parseInt( startTimeMinField.getText().toString() );
-
-
-        //End time
-        final EditText endTimeHourField = (EditText) findViewById(R.id.preferenceEndTimeHour);
-        int endTimeHour = Integer.parseInt( endTimeHourField.getText().toString() );
-
-        final EditText endTimeMinField = (EditText) findViewById(R.id.preferenceEndTimeMin);
-        int endTimeMin = Integer.parseInt(endTimeMinField.getText().toString() );
 
         preferencesEditor.putInt("daysFromToday", daysFromToday);
         preferencesEditor.putInt("startTimeHour", startTimeHour);
