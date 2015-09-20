@@ -6,4 +6,145 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.team_scream_mit.scream.PreferencesActivity">
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true">
+
+    <TextView
+        android:text="Event types:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10pt"/>
+        <CheckBox android:id="@+id/preferenceStudyBreak"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/studyBreaks"
+            android:checked="true"/>
+
+        <CheckBox android:id="@+id/preferenceConcert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/concerts"
+            android:checked="true"/>
+        <CheckBox android:id="@+id/preferenceParty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/parties"
+            android:checked="true"/>
+        <CheckBox android:id="@+id/preferenceInfoSession"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/infoSessions"
+            android:checked="true"/>
+
+        <CheckBox android:id="@+id/preferenceSeminar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/seminars"
+            android:checked="true"/>
+
+        <TextView
+            android:text="Day range:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="8pt"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:text="  within   "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="8pt"/>
+            <EditText
+                android:id="@+id/preferenceTimeRange"
+                android:layout_width="100px"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:text="7"/>
+            <TextView
+                android:text=" days from TODAY "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="8pt"/>
+        </LinearLayout>
+
+        <TextView
+            android:text="Time range (defualt all):"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="8pt"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="150px"
+                android:layout_height="@dimen/add_event_row"
+                android:textSize="8pt"
+                android:text="      from:"/>
+
+            <EditText
+                android:id="@+id/preferenceStartTimeHour"
+                android:layout_height="@dimen/add_event_row"
+                android:inputType="number"
+                android:ems="2"
+                android:hint="hour"
+                android:layout_width="fill_parent">
+            </EditText>
+            <EditText
+                android:id="@+id/preferenceStartTimeMin"
+                android:layout_height="@dimen/add_event_row"
+                android:inputType="number"
+                android:ems="2"
+                android:hint="min"
+                android:layout_width="fill_parent">
+            </EditText>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="150px"
+                android:layout_height="@dimen/add_event_row"
+                android:textSize="8pt"
+                android:text="      to:"/>
+            <EditText
+                android:id="@+id/preferenceEndTimeHour"
+                android:layout_height="@dimen/add_event_row"
+                android:inputType="number"
+                android:ems="2"
+                android:hint="hour"
+                android:layout_width="fill_parent">
+            </EditText>
+            <EditText
+                android:id="@+id/preferenceEndTimeMin"
+                android:layout_height="@dimen/add_event_row"
+                android:inputType="number"
+                android:ems="2"
+                android:hint="min"
+                android:layout_width="fill_parent">
+            </EditText>
+        </LinearLayout>
+        <Button
+            android:id="@+id/updatePreference"
+            android:layout_height="wrap_content"
+            android:text="@string/createEvent"
+            android:onClick="updatePreference"
+            android:layout_width="fill_parent">
+        </Button>
+
+    </LinearLayout>
+
 </RelativeLayout>

@@ -4,6 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Spinner;
 
 public class AddEventActivity extends AppCompatActivity {
 
@@ -33,5 +36,58 @@ public class AddEventActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    //Create a new event from the input form and send it to server
+    public void createNewEvent(View button) {
+
+
+        //category
+        final Spinner eventTypeSpinner = (Spinner) findViewById(R.id.category);
+        String evenType = eventTypeSpinner.getSelectedItem().toString();
+
+
+        //title, description, location
+        final EditText titleField = (EditText) findViewById(R.id.title);
+        String title = titleField.getText().toString();
+
+        final EditText descriptionField = (EditText) findViewById(R.id.description);
+        String description = descriptionField.getText().toString();
+
+        final EditText locationField = (EditText) findViewById(R.id.location);
+        String location = locationField.getText().toString();
+
+        //Event date
+        final EditText dateDayField = (EditText) findViewById(R.id.dateDay);
+        int dateDay = Integer.parseInt(dateDayField.getText().toString());
+
+        final EditText dateMonthField = (EditText) findViewById(R.id.dateMonth);
+        int dateMonth = Integer.parseInt(dateMonthField.getText().toString());
+
+        final EditText dateYearField = (EditText) findViewById(R.id.dateYear);
+        int dateYear = Integer.parseInt( dateYearField.getText().toString() );
+
+        //Start time
+        final EditText startTimeHourField = (EditText) findViewById(R.id.startTimeHour);
+        int startTimeHour = Integer.parseInt( startTimeHourField.getText().toString() );
+
+        final EditText startTimeMinField = (EditText) findViewById(R.id.startTimeMin);
+        int startTimeMin = Integer.parseInt( startTimeMinField.getText().toString() );
+
+
+        //End time
+        final EditText endTimeHourField = (EditText) findViewById(R.id.endTimeHour);
+        int endTimeHour = Integer.parseInt( endTimeHourField.getText().toString() );
+
+        final EditText endTimeMinField = (EditText) findViewById(R.id.endTimeMin);
+        int endTimeMin = Integer.parseInt( endTimeMinField.getText().toString() );
+
+        //Contact
+        final EditText contactField = (EditText) findViewById(R.id.contact);
+        String contact = contactField.getText().toString();
+
+
+
+        //TODO: SEND TO SERVER
     }
 }
