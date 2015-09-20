@@ -9,9 +9,13 @@
 
     <TextView
         android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:textSize="30sp" />
+        android:layout_height="wrap_content"
+        android:paddingTop="30sp"
+        android:textStyle="bold"
+        android:textColor="#800080"
+        android:text="Are you bored and looking for"
+        android:textSize="30sp"
+        android:gravity="center"/>
 
     <LinearLayout
         android:id="@+id/llProfile"
