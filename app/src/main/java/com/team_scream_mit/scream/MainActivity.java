@@ -8,6 +8,7 @@ import android.content.Intent;
 import com.google.android.gms.plus.Plus;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
@@ -51,8 +52,8 @@ public class MainActivity extends AppCompatActivity {
     private String userEmail;
 
     // 5, 9 and 9 are default values
-    private int daysFromToday = 7;
-    private double timeRangeFrom = 9.00;
+    private int daysFromToday = 5;
+    private double timeRangeFrom = 7.00;
     private double timeRangeTo = 21.00;
     private ArrayList<String> searchCategories;
 
@@ -93,7 +94,8 @@ public class MainActivity extends AppCompatActivity {
 
         showLoadingDialog();
 
-        preferenceSettings = getPreferences(PREFERENCE_MODE_PRIVATE);
+        preferenceSettings = PreferenceManager.getDefaultSharedPreferences(this);
+
 
         searchCategories = getDefaultCategories();
         useSavedPreferencesIfAvailable();
@@ -147,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
      * Called when left swipe button clicked
      */
     public void leftSwipe() {
+        makeToast(MainActivity.this, "search categories - " + searchCategories.toString());
         flingContainer.getTopCardListener().selectLeft();
     }
 
@@ -161,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
-                Log.d(LOG_MESSAGE, "remove handler");
+                //Log.d(LOG_MESSAGE, "remove handler");
                 // delete an object from the Adapter (/AdapterView)
                 eventsArray.remove(0);
                 lastRemovedEventId = eventIds.get(0);
@@ -170,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
                 lastRemovedEventStartTime = eventStartTimes.get(0);
                 lastRemovedEventEndTime = eventEndTimes.get(0);
                 lastRemovedEventLocation = eventLocations.get(0);
-                Log.d(LOG_MESSAGE, lastRemovedEventId + " - before");
+                //Log.d(LOG_MESSAGE, lastRemovedEventId + " - before");
                 eventIds.remove(0);
                 eventTitles.remove(0);
                 eventDescriptions.remove(0);
@@ -178,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
                 eventEndTimes.remove(0);
                 eventLocations.remove(0);
                 arrayAdapter.notifyDataSetChanged();
-                Log.d(LOG_MESSAGE, lastRemovedEventId + " - after");
+                //Log.d(LOG_MESSAGE, lastRemovedEventId + " - after");
             }
 
             @Override
@@ -240,6 +243,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_INSERT);
         intent.setType("vnd.android.cursor.item/event");
 
+        Calendar ss = Calendar.getInstance();
+        ss.getTimeInMillis();
 
         intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startTime);
         intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME,endTime);
@@ -343,16 +348,21 @@ public class MainActivity extends AppCompatActivity {
 
         if (dft != -1){
             daysFromToday = dft;
+            Log.d(LOG_MESSAGE, "days from today - " + dft);
         }
         if (sth != -1 && stm != -1){
             timeRangeFrom = sth + stm*1.0/60;
+            Log.d(LOG_MESSAGE, "time from - " + sth + ":" + stm);
         }
         if (eth != -1 && etm != -1){
             timeRangeTo = eth + etm*1.0/60;
+            Log.d(LOG_MESSAGE, "time to - " + eth + ":" + etm);
         }
         if (sc != null){
             searchCategories = new ArrayList<>(sc);
+            Log.d(LOG_MESSAGE, "search categories - " + searchCategories.toString());
         }
+        Log.d(LOG_MESSAGE, "Nothing found in the preferences");
     }
 
     private class DataReception implements CallbackInterface{
@@ -379,7 +389,9 @@ public class MainActivity extends AppCompatActivity {
                     String formattedDate = getFormattedDate(eventStartDate, eventEndDate);
 
                     eventText = eventTitle + "\n" + formattedDate + ",\n" + eventLocation;
-
+                    if (eventText.length() > 160){
+                        eventText = eventText.substring(0, 160);
+                    }
                     eventsArray.add(eventText);
                     eventIds.add(eventId);
                     eventTitles.add(eventTitle);
@@ -390,7 +402,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 progress.dismiss();
                 //Log.i(LOG_MESSAGE, eventsArray.toString());
-                Log.d(LOG_MESSAGE, eventIds.toString());
+                //Log.d(LOG_MESSAGE, eventIds.toString());
                 loadCards();
             }
         }
