@@ -3,7 +3,7 @@
     <!-- the theme applied to the application or activity -->
 
     <style name="BarWithLogoTheme"
-        parent="@style/Theme.AppCompat.Light">
+        parent="@style/Theme.AppCompat.Light.DarkActionBar">
         <item name="android:background">@color/white</item>
     </style>
 
