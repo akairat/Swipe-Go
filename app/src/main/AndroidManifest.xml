@@ -14,7 +14,8 @@
         android:icon="@mipmap/arrow"
         android:label="@string/app_name"
         android:theme="@style/BarWithLogoTheme"
-        android:logo="@drawable/logo_label">
+        android:logo="@drawable/logo_label"
+        android:largeHeap="true">
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >

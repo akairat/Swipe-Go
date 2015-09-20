@@ -2,6 +2,7 @@ package com.team_scream_mit.scream;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -19,14 +20,15 @@ public class PreferencesActivity extends AppCompatActivity {
 
     private SharedPreferences preferenceSettings;
     private SharedPreferences.Editor preferencesEditor;
-    private static final int PREFERENCE_MODE_PRIVATE = 0;
+    // private static final int PREFERENCE_MODE_PRIVATE = 0;
     private App parseApp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preferences);
-        preferenceSettings = getPreferences(PREFERENCE_MODE_PRIVATE);
+        //preferenceSettings = getPreferences(PREFERENCE_MODE_PRIVATE);
+        preferenceSettings = PreferenceManager.getDefaultSharedPreferences(this);
         preferencesEditor = preferenceSettings.edit();
 
         parseApp = (App) getApplication();
