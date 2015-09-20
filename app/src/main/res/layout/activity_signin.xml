@@ -4,14 +4,14 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".Signin"
-    android:id="@+id/i">
+    android:id="@+id/i"
+    android:background="@drawable/events" >
 
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:text="Event Swipe"
         android:gravity="center"
-        android:textSize="30sp"/>
+        android:textSize="30sp" />
 
     <LinearLayout
         android:id="@+id/llProfile"
@@ -53,6 +53,7 @@
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/btn_sign_in"
+        android:text="@string/btn_sign_in"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"/>

@@ -60,14 +60,16 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
 
     private SignInButton btnSignIn;
     private Button btnSignOut, btnRevokeAccess;
-    private ImageView imgProfilePic;
-    private TextView txtName, txtEmail;
+    protected ImageView imgProfilePic;
+    protected TextView txtName, txtEmail;
     private LinearLayout llProfileLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.icon_label);
 
         btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
         btnSignOut = (Button) findViewById(R.id.btn_sign_out);
@@ -108,25 +110,30 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_sign_in:
+                if (mSignInClicked) {
+                    signOutFromGplus();
+                } else {
+                    signInWithGplus();
+                }
+
                 // Signin button clicked
-                Intent intent = new Intent(Intent.ACTION_INSERT);
-                intent.setType("vnd.android.cursor.item/event");
-
-                Calendar cal = Calendar.getInstance();
-                long startTime = cal.getTimeInMillis();
-                long endTime = cal.getTimeInMillis()  + 60 * 60 * 1000;
-
-                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startTime);
-                intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME,endTime);
-                intent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true);
-
-                intent.putExtra(Events.TITLE, "Neel Birthday");
-                intent.putExtra(Events.DESCRIPTION,  "This is a sample description");
-                intent.putExtra(Events.EVENT_LOCATION, "My Guest House");
-                intent.putExtra(Events.RRULE, "FREQ=YEARLY");
-
-                startActivity(intent);
-                signInWithGplus();
+//                Intent intent = new Intent(Intent.ACTION_INSERT);
+//                intent.setType("vnd.android.cursor.item/event");
+//
+//                Calendar cal = Calendar.getInstance();
+//                long startTime = cal.getTimeInMillis();
+//                long endTime = cal.getTimeInMillis()  + 60 * 60 * 1000;
+//
+//                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startTime);
+//                intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME,endTime);
+//                intent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true);
+//
+//                intent.putExtra(Events.TITLE, "Neel Birthday");
+//                intent.putExtra(Events.DESCRIPTION,  "This is a sample description");
+//                intent.putExtra(Events.EVENT_LOCATION, "My Guest House");
+//                intent.putExtra(Events.RRULE, "FREQ=YEARLY");
+//
+//                startActivity(intent);
                 break;
             case R.id.btn_sign_out:
                 // Signout button clicked
@@ -266,9 +273,9 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
      * */
     private void updateUI(boolean isSignedIn) {
         if (isSignedIn) {
+//            Intent intent = new Intent(this, MainActivity.class);
+//            startActivity(intent);
             btnSignOut.setVisibility(View.VISIBLE);
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
         } else {
             btnSignIn.setVisibility(View.VISIBLE);
             btnSignOut.setVisibility(View.GONE);
