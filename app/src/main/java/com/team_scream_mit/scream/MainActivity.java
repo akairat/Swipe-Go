@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import com.google.android.gms.plus.Plus;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
@@ -249,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true);
 
         intent.putExtra(Events.TITLE, title);
-        intent.putExtra(Events.DESCRIPTION,  description);
+        intent.putExtra(Events.DESCRIPTION, description);
         intent.putExtra(Events.EVENT_LOCATION, location);
         //intent.putExtra(Events.RRULE, "FREQ=ONCE");
 
@@ -283,7 +284,17 @@ public class MainActivity extends AppCompatActivity {
             startActivity(i);
             return true;
         } else if (id == R.id.logout){
-            parseApp.signOutFromGplus();
+            if (parseApp.mGoogleApiClient.isConnected()) {
+                Log.e(LOG_MESSAGE, "heloohoooo");
+                Plus.AccountApi.clearDefaultAccount(parseApp.mGoogleApiClient);
+                parseApp.mGoogleApiClient.disconnect();
+                parseApp.mGoogleApiClient.connect();
+                parseApp.clearUserName(this);
+            }
+
+            parseApp.clearUserName(this);
+            Intent intent = new Intent(this, SigninActivity.class);
+            startActivity(intent);
             finish();
             return true;
         } else if (id == R.id.main_screen){

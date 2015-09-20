@@ -4,7 +4,13 @@
 
     <style name="BarWithLogoTheme"
         parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:actionBarStyle">@style/ActionBarTheme</item>
+    </style>
+
+    <style name="ActionBarTheme"
+        parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@color/white</item>
+        <item name="background">@color/white</item>
         <item name="android:actionOverflowButtonStyle">@style/OverflowButton</item>
         <item name="actionOverflowButtonStyle">@style/OverflowButton</item>
         <item name="android:dropDownListViewStyle">@style/PopupMenuListView</item>
@@ -29,3 +35,4 @@
     </style>
 
 </resources>
+
