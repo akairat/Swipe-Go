@@ -4,179 +4,166 @@
     android:padding="60px"
     tools:context="com.team_scream_mit.scream.PreferencesActivity"
     android:background="#FFFFFF">
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true">
-
-    <TextView
-        android:text="Event types:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="9pt"/>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="60px"
-        android:orientation="vertical">
-        <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:columnCount="2"
-            android:rowCount="5"
-            android:orientation="horizontal"
-            tools:context=".GridXMLActivity" >
-            <TextView
-                android:text="@string/studyBreaks"
-                android:textSize="@dimen/preference_text_size"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <CheckBox android:id="@+id/preferenceStudyBreak"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"/>
-            <TextView
-                android:text="@string/concerts"
-                android:textSize="@dimen/preference_text_size"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <CheckBox android:id="@+id/preferenceConcert"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"/>
-            <TextView
-                android:text="@string/parties"
-                android:textSize="@dimen/preference_text_size"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <CheckBox android:id="@+id/preferenceParty"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"/>
-            <TextView
-                android:text="@string/infoSessions"
-                android:textSize="@dimen/preference_text_size"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <CheckBox android:id="@+id/preferenceInfoSession"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"/>
-            <TextView
-                android:text="@string/seminars"
-                android:textSize="@dimen/preference_text_size"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <CheckBox android:id="@+id/preferenceSeminar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"/>
-        </GridLayout>
-    </LinearLayout>
-        <TextView
-            android:text="Day range:"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="9pt"/>
-
-
+        android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="60px"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true">
+
             <TextView
-                android:text="  within   "
+                android:text="Event types:"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="8pt"/>
-            <EditText
-                android:id="@+id/preferenceTimeRange"
-                android:layout_width="100px"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:text="7"/>
-            <TextView
-                android:text=" days from TODAY "
+                android:textSize="9pt"/>
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="8pt"/>
+                android:paddingLeft="60px"
+                android:orientation="vertical">
+                <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:columnCount="2"
+                    android:rowCount="5"
+                    android:orientation="horizontal"
+                    tools:context=".GridXMLActivity" >
+                    <TextView
+                        android:text="@string/studyBreaks"
+                        android:textSize="@dimen/preference_text_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <CheckBox android:id="@+id/preferenceStudyBreak"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"/>
+                    <TextView
+                        android:text="@string/concerts"
+                        android:textSize="@dimen/preference_text_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <CheckBox android:id="@+id/preferenceConcert"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"/>
+                    <TextView
+                        android:text="@string/parties"
+                        android:textSize="@dimen/preference_text_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <CheckBox android:id="@+id/preferenceParty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"/>
+                    <TextView
+                        android:text="@string/infoSessions"
+                        android:textSize="@dimen/preference_text_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <CheckBox android:id="@+id/preferenceInfoSession"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"/>
+                    <TextView
+                        android:text="@string/seminars"
+                        android:textSize="@dimen/preference_text_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <CheckBox android:id="@+id/preferenceSeminar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"/>
+                </GridLayout>
+            </LinearLayout>
+            <TextView
+                android:text="Day range:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="9pt"/>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="60px"
+                android:orientation="horizontal">
+                <TextView
+                    android:text="  within   "
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="8pt"/>
+                <EditText
+                    android:id="@+id/preferenceTimeRange"
+                    android:layout_width="100px"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:text="7"/>
+                <TextView
+                    android:text=" days from TODAY "
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="8pt"/>
+            </LinearLayout>
+
+            <TextView
+                android:text="Time range (defualt all):"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="9pt"/>
+
+            <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:rowCount="2"
+                android:layout_marginLeft="80px"
+                android:orientation="horizontal"
+                tools:context=".GridXMLActivity" >
+                <TextView
+                    android:layout_width="120px"
+                    android:layout_height="@dimen/add_event_row"
+                    android:textSize="8pt"
+                    android:text="from:"/>
+
+                <TimePicker
+                    android:id="@+id/preferenceStartTimeSpinner"
+                    android:layout_height="100dp"
+                    android:layout_width="fill_parent"
+                    android:timePickerMode="spinner"/>
+
+                <TextView
+                    android:layout_width="120px"
+                    android:layout_height="fill_parent"
+                    android:textSize="8pt"
+                    android:text="to:"/>
+                <TimePicker
+                    android:id="@+id/preferenceEndTimeSpinner"
+                    android:layout_height="100dp"
+                    android:layout_width="fill_parent"
+                    android:timePickerMode="spinner"/>
+
+            </GridLayout>
+            <Button
+                android:id="@+id/updatePreference"
+                android:onClick="updatePreference"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Update event filter"
+                android:textSize="20dp"
+                android:background="#9370DB"
+                />
+
         </LinearLayout>
-
-        <TextView
-            android:text="Time range (defualt all):"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="9pt"/>
-        <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:columnCount="3"
-            android:rowCount="2"
-            android:layout_marginLeft="80px"
-            android:orientation="horizontal"
-            tools:context=".GridXMLActivity" >
-            <TextView
-                android:layout_width="120px"
-                android:layout_height="@dimen/add_event_row"
-                android:textSize="8pt"
-                android:text="from:"/>
-
-            <EditText
-                android:id="@+id/preferenceStartTimeHour"
-                android:layout_height="fill_parent"
-                android:inputType="number"
-                android:hint="hour"
-                android:layout_width="fill_parent">
-            </EditText>
-            <EditText
-                android:id="@+id/preferenceStartTimeMin"
-                android:layout_height="fill_parent"
-                android:inputType="number"
-                android:hint="min"
-                android:layout_width="fill_parent">
-            </EditText>
-            <TextView
-                android:layout_width="120px"
-                android:layout_height="fill_parent"
-                android:textSize="8pt"
-                android:text="to:"/>
-            <EditText
-                android:id="@+id/preferenceEndTimeHour"
-                android:layout_height="fill_parent"
-                android:inputType="number"
-                android:hint="hour"
-                android:layout_width="fill_parent">
-            </EditText>
-            <EditText
-                android:id="@+id/preferenceEndTimeMin"
-                android:layout_height="fill_parent"
-                android:inputType="number"
-                android:hint="min"
-                android:layout_width="fill_parent">
-            </EditText>
-
-        </GridLayout>
-        <Button
-            android:id="@+id/updatePreference"
-            android:onClick="updatePreference"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Update event filter"
-            android:textSize="20dp"
-            android:background="#9370DB"
-            />
-
-    </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>
