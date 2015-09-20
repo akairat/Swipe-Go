@@ -4,9 +4,8 @@
 
     <style name="BarWithLogoTheme"
         parent="@style/Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:background">@color/white</item>
+        <item name="colorPrimary">@color/purple</item>
         <item name="android:actionBarStyle">@style/ActionBarTheme</item>
-        <item name="android:textColor">#6A0888</item>
     </style>
 
     <style name="ActionBarTheme"
@@ -17,11 +16,11 @@
         <item name="actionOverflowButtonStyle">@style/OverflowButton</item>
         <item name="android:dropDownListViewStyle">@style/PopupMenuListView</item>
         <item name="dropDownListViewStyle">@style/PopupMenuListView</item>
-
+        <item name="android:titleTextStyle">@color/white</item>
         <item name="actionBarDivider">@null</item>
 
         <!-- OverFlow Menu Text Color -->
-        <item name="android:textColor">#6A0888</item>
+        <item name="android:textColor">@color/purple</item>
     </style>
 
     <!-- Set Custom Icon for Overflow Button in ActionBar -->
