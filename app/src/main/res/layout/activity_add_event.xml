@@ -3,13 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:bootstrap="http://schemas.android.com/apk/res-auto"
-    tools:context="com.team_scream_mit.scream.AddEventActivity">
+    tools:context="com.team_scream_mit.scream.AddEventActivity"
+    android:background="@drawable/blue_back">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="60px"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
         <Spinner
             android:id="@+id/category"
             android:layout_height="wrap_content"
@@ -33,136 +40,133 @@
             android:lines="1"
             android:layout_width="fill_parent"/>
 
-        <LinearLayout
+        <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/add_event_padding"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="200px"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="@dimen/add_event_row"
-                    android:textSize="8pt"
-                    android:text="@string/AddEventLocation"/>
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="@dimen/add_event_row"
-                    android:textSize="8pt"
-                    android:text="@string/AddEventDate"/>
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="200px"
-                    android:textSize="8pt"
-                    android:text="Time:"/>
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="@dimen/add_event_row"
-                    android:textSize="8pt"
-                    android:text="@string/AddEventContact"/>
-            </LinearLayout>
-
+            android:layout_margin="50px"
+            android:columnCount="2"
+            android:rowCount="4"
+            android:orientation="horizontal"
+            tools:context=".GridXMLActivity" >
+            <TextView
+                android:layout_width="250px"
+                android:layout_height="fill_parent"
+                android:padding="20px"
+                android:textSize="8pt"
+                android:text="@string/AddEventLocation"/>
+            <EditText
+                android:id="@+id/location"
+                android:layout_height="fill_parent"
+                android:inputType="textPersonName"
+                android:layout_width="600px"/>
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:padding="20px"
+                android:textSize="8pt"
+                android:text="@string/AddEventDate"/>
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="fill_parent"
+                android:orientation="horizontal">
                 <EditText
-                    android:id="@+id/location"
-                    android:layout_height="@dimen/add_event_row"
-                    android:inputType="textPersonName"
-                    android:layout_width="400px"/>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <EditText
-                        android:id="@+id/dateDay"
-                        android:layout_height="@dimen/add_event_row"
-                        android:inputType="number"
-                        android:ems="2"
-                        android:hint="dd"
-                        android:layout_width="fill_parent"/>
-                    <EditText
-                        android:id="@+id/dateMonth"
-                        android:layout_height="@dimen/add_event_row"
-                        android:inputType="number"
-                        android:ems="2"
-                        android:hint="mm"
-                        android:layout_width="fill_parent"/>
-                    <EditText
-                        android:id="@+id/dateYear"
-                        android:layout_height="@dimen/add_event_row"
-                        android:inputType="number"
-                        android:ems="2"
-                        android:hint="yy"
-                        android:layout_width="fill_parent"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="130px"
-                        android:layout_height="@dimen/add_event_row"
-                        android:textSize="8pt"
-                        android:text="  FROM:"/>
-
-                    <EditText
-                        android:id="@+id/startTimeHour"
-                        android:layout_height="@dimen/add_event_row"
-                        android:inputType="number"
-                        android:ems="2"
-                        android:hint="hour"
-                        android:layout_width="fill_parent">
-                    </EditText>
-                    <EditText
-                        android:id="@+id/startTimeMin"
-                        android:layout_height="@dimen/add_event_row"
-                        android:inputType="number"
-                        android:ems="2"
-                        android:hint="min"
-                        android:layout_width="fill_parent">
-                    </EditText>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="130px"
-                        android:layout_height="@dimen/add_event_row"
-                        android:textSize="8pt"
-                        android:text="  TO:"/>
-                    <EditText
-                        android:id="@+id/endTimeHour"
-                        android:layout_height="@dimen/add_event_row"
-                        android:inputType="number"
-                        android:ems="2"
-                        android:hint="hour"
-                        android:layout_width="fill_parent">
-                    </EditText>
-                    <EditText
-                        android:id="@+id/endTimeMin"
-                        android:layout_height="@dimen/add_event_row"
-                        android:inputType="number"
-                        android:ems="2"
-                        android:hint="min"
-                        android:layout_width="fill_parent">
-                    </EditText>
-                </LinearLayout>
+                    android:id="@+id/dateDay"
+                    android:layout_height="fill_parent"
+                    android:inputType="number"
+                    android:hint="dd"
+                    android:layout_width="fill_parent"/>
                 <EditText
-                    android:id="@+id/contact"
-                    android:layout_height="@dimen/add_event_row"
-                    android:inputType="textEmailAddress"
-                    android:layout_width="400px">
-                </EditText>
+                    android:id="@+id/dateMonth"
+                    android:layout_height="fill_parent"
+                    android:inputType="number"
+                    android:layout_marginLeft="80px"
+                    android:hint="mm"
+                    android:layout_width="fill_parent"/>
+                <EditText
+                    android:id="@+id/dateYear"
+                    android:layout_height="fill_parent"
+                    android:inputType="number"
+                    android:layout_marginLeft="80px"
+                    android:hint="yyyy"
+                    android:layout_width="fill_parent"/>
             </LinearLayout>
 
-        </LinearLayout>
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textSize="8pt"
+                android:padding="20px"
+                android:text="Time:"/>
+            <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:columnCount="3"
+                android:rowCount="2"
+                android:orientation="horizontal"
+                tools:context=".GridXMLActivity" >
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:textSize="8pt"
+                    android:text="from:"/>
+
+                <EditText
+                    android:id="@+id/startTimeHour"
+                    android:layout_height="fill_parent"
+                    android:inputType="number"
+                    android:layout_marginLeft="30px"
+                    android:hint="hour"
+                    android:layout_width="fill_parent">
+                </EditText>
+                <EditText
+                    android:id="@+id/startTimeMin"
+                    android:layout_height="fill_parent"
+                    android:inputType="number"
+                    android:layout_marginLeft="80px"
+                    android:hint="min"
+                    android:layout_width="fill_parent">
+                </EditText>
+                <TextView
+                    android:layout_width="130px"
+                    android:layout_height="fill_parent"
+                    android:textSize="8pt"
+                    android:text="to:"/>
+                <EditText
+                    android:id="@+id/endTimeHour"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="30px"
+                    android:inputType="number"
+                    android:hint="hour"
+                    android:layout_width="fill_parent">
+                </EditText>
+                <EditText
+                    android:id="@+id/endTimeMin"
+                    android:layout_height="fill_parent"
+                    android:inputType="number"
+                    android:layout_marginLeft="80px"
+                    android:hint="min"
+                    android:layout_width="fill_parent">
+                </EditText>
+
+                </GridLayout>
+
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textSize="8pt"
+                android:padding="20px"
+                android:text="@string/AddEventContact"/>
+            <EditText
+                android:id="@+id/contact"
+                android:layout_height="fill_parent"
+                android:inputType="textEmailAddress"
+                android:layout_width="600px">
+            </EditText>
+            </GridLayout>
+
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -172,7 +176,5 @@
             android:background="#9370DB"
             />
     </LinearLayout>
-
-
 
 </RelativeLayout>
