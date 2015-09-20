@@ -43,13 +43,7 @@
     <string name="AddEventContact">Contact:</string>
     <string name="categoryType">Please choose your event category</string>
     <string name="categoryType1">Please choose your event category</string>
-    <string name="about">Are you bored and looking for events to put in your schedule? \n\nThen, this app is just for you. \n\n
-        Events are be matched with you according to your preferences and
-    if you\'re interested in a certain event, you can add it to your phone's calendar with a simple
-        swipe to the right, otherwise you can skip it with a simple swipe to the left. \n\n
-        Swipe>>Go is a tinder for events. :)\n
-        You can update your preferences using the menu on the top left of the screen.\n\n
-        You can also add new events to our events database using the menu on the top left of the screen. \n\n
-
-        Swipe And Go ;)!</string>
+    <string name="about">Are you bored and wondering what\'s going around? \n\nThen, this app is just for you! \n\nEvents are filtered according to your preferences and
+    if you\'re interested in a certain event, you can add it to your phone\'s calendar with a simple
+        swipe to the right, otherwise you can skip it with a simple swipe to the left. \n\nSwipe>>Go is a tinder for events. :)\nYou can update your preferences using the menu on the top left of the screen.\n\nYou can also add new events to our events database running on Parse using the menu on the top left of the screen. \n\nSwipe\'n\'Go ;)!</string>
 </resources>
