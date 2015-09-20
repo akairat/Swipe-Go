@@ -4,17 +4,17 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="30px"
-    android:background="#FFFFFF"
+    android:background="#F5EFFB"
     android:weightSum="1">
 
     <ImageButton
         android:layout_width="130dp"
-        android:layout_marginLeft="80px"
+        android:layout_marginLeft="70px"
         android:layout_height="100dp"
+        android:background="#F5EFFB"
         android:src="@drawable/red_cross_icon3"
         android:scaleType="centerInside"
-        android:id="@+id/dislike_button"
-        android:background="#FFFFFF"/>
+        android:id="@+id/dislike_button" />
 
     <ImageButton
         android:layout_width="130dp"
@@ -22,7 +22,7 @@
         android:layout_height="100dp"
         android:src="@drawable/green_ok_icon3"
         android:scaleType="centerInside"
-        android:background="#FFFFFF"
+        android:background="#F5EFFB"
         android:id="@+id/like_button"
         android:layout_weight="0.31" />
 </LinearLayout>

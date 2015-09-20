@@ -8,11 +8,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MainActivity"
-    android:background="#FFFFFF">
+    android:background="#F5EFFB">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#F5EFFB"
         android:orientation="vertical">
 
         <com.lorentzos.flingswipe.SwipeFlingAdapterView
