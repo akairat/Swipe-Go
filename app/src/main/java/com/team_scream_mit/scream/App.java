@@ -5,9 +5,12 @@ package com.team_scream_mit.scream;
  */
 
 import android.app.Application;
+import android.content.Intent;
 import android.util.Log;
 import android.content.SharedPreferences;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.plus.Plus;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.Parse;
@@ -32,6 +35,7 @@ public class App extends Application
 {
     protected String userName;
     protected String userEmail;
+    protected GoogleApiClient mGoogleApiClient;
     static final String PREF_USER_NAME= "username";
 
     static SharedPreferences getSharedPreferences(Context ctx) {
@@ -135,7 +139,7 @@ public class App extends Application
 
             @Override
             public void done(ParseObject user, ParseException e) {
-                if (e != null){
+                if (e != null) {
                     System.err.println("User wasn't found while fetching events");
                 }
                 if (user != null && e == null) {
@@ -206,6 +210,17 @@ public class App extends Application
         });
     }
 
+    /**
+     * Sign-out from google
+     * */
+    public void signOutFromGplus() {
+        if (mGoogleApiClient.isConnected()) {
+            Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
+            mGoogleApiClient.disconnect();
+            mGoogleApiClient.connect();
+            clearUserName(this);
+        }
+    }
 
 }
 

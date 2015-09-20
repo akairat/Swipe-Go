@@ -43,7 +43,6 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
     private static final int PROFILE_PIC_SIZE = 400;
 
     // Google client to interact with Google API
-    private GoogleApiClient mGoogleApiClient;
 
     /**
      * A flag indicating that a PendingIntent is in progress and prevents us
@@ -66,7 +65,7 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
         super.onCreate(savedInstanceState);
         app = (App) getApplication();
         // Initializing google plus api client
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
+        app.mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this).addApi(Plus.API)
                 .addScope(Plus.SCOPE_PLUS_LOGIN).build();
@@ -99,13 +98,13 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
     protected void onStart() {
         Log.e(TAG, "Name: " + 2);
         super.onStart();
-        mGoogleApiClient.connect();
+        app.mGoogleApiClient.connect();
     }
 
     protected void onStop() {
         super.onStop();
-        if (mGoogleApiClient.isConnected()) {
-            mGoogleApiClient.disconnect();
+        if (app.mGoogleApiClient.isConnected()) {
+            app.mGoogleApiClient.disconnect();
         }
     }
 
@@ -118,14 +117,6 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
             case R.id.btn_sign_in:
                 signInWithGplus();
 
-                break;
-            case R.id.btn_sign_out:
-                // Signout button clicked
-                signOutFromGplus();
-                break;
-            case R.id.btn_revoke_access:
-                // Revoke access button clicked
-                revokeGplusAccess();
                 break;
         }
     }
@@ -162,8 +153,8 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
 
             mIntentInProgress = false;
 
-            if (!mGoogleApiClient.isConnecting()) {
-                mGoogleApiClient.connect();
+            if (!app.mGoogleApiClient.isConnecting()) {
+                app.mGoogleApiClient.connect();
             }
         }
     }
@@ -184,9 +175,9 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
      * */
     private void getProfileInformation() {
         try {
-            if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
+            if (Plus.PeopleApi.getCurrentPerson(app.mGoogleApiClient) != null) {
                 Person currentPerson = Plus.PeopleApi
-                        .getCurrentPerson(mGoogleApiClient);
+                        .getCurrentPerson(app.mGoogleApiClient);
 
                 app.userName = currentPerson.getDisplayName();
                 app.setUserName(this, app.userName);
@@ -246,7 +237,7 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
 
     @Override
     public void onConnectionSuspended(int arg0) {
-        mGoogleApiClient.connect();
+        app.mGoogleApiClient.connect();
         updateUI(false);
     }
 
@@ -269,7 +260,7 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
      * Sign-in into google
      * */
     private void signInWithGplus() {
-        if (!mGoogleApiClient.isConnecting()) {
+        if (!app.mGoogleApiClient.isConnecting()) {
             mSignInClicked = true;
             resolveSignInError();
         }
@@ -285,37 +276,23 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
                 mConnectionResult.startResolutionForResult(this, RC_SIGN_IN);
             } catch (SendIntentException e) {
                 mIntentInProgress = false;
-                mGoogleApiClient.connect();
+                app.mGoogleApiClient.connect();
             }
         }
     }
 
     /**
-     * Sign-out from google
-     * */
-    public void signOutFromGplus() {
-        if (mGoogleApiClient.isConnected()) {
-            Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
-            mGoogleApiClient.disconnect();
-            mGoogleApiClient.connect();
-            app.clearUserName(this);
-            updateUI(false);
-        }
-    }
-
-
-    /**
      * Revoking access from google
      * */
     private void revokeGplusAccess() {
-        if (mGoogleApiClient.isConnected()) {
-            Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
-            Plus.AccountApi.revokeAccessAndDisconnect(mGoogleApiClient)
+        if (app.mGoogleApiClient.isConnected()) {
+            Plus.AccountApi.clearDefaultAccount(app.mGoogleApiClient);
+            Plus.AccountApi.revokeAccessAndDisconnect(app.mGoogleApiClient)
                     .setResultCallback(new ResultCallback<Status>() {
                         @Override
                         public void onResult(Status arg0) {
                             Log.e(TAG, "User access revoked!");
-                            mGoogleApiClient.connect();
+                            app.mGoogleApiClient.connect();
                             updateUI(false);
                         }
 

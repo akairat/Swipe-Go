@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- the theme applied to the application or activity -->
+    <style name="BarWithLogoTheme"
+        parent="@style/Theme.AppCompat.Light">
+        <item name="android:actionMenuTextColor">@color/actionbar_text</item>
+    </style>
+</resources>
