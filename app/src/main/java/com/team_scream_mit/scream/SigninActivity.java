@@ -65,31 +65,35 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         app = (App) getApplication();
-        if (app.userName != null) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
-        setContentView(R.layout.activity_signin);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.icon_label);
-
-        btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
-        btnSignOut = (Button) findViewById(R.id.btn_sign_out);
-        btnRevokeAccess = (Button) findViewById(R.id.btn_revoke_access);
-        imgProfilePic = (ImageView) findViewById(R.id.imgProfilePic);
-        llProfileLayout = (LinearLayout) findViewById(R.id.llProfile);
-
-        // Button click listeners
-        btnSignIn.setOnClickListener(this);
-        btnSignOut.setOnClickListener(this);
-        btnRevokeAccess.setOnClickListener(this);
-
         // Initializing google plus api client
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this).addApi(Plus.API)
                 .addScope(Plus.SCOPE_PLUS_LOGIN).build();
+
+        if(app.getUserName(this).length() == 0)
+        {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        else
+        {
+            setContentView(R.layout.activity_signin);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setIcon(R.drawable.icon_label);
+
+            btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
+            btnSignOut = (Button) findViewById(R.id.btn_sign_out);
+            btnRevokeAccess = (Button) findViewById(R.id.btn_revoke_access);
+            imgProfilePic = (ImageView) findViewById(R.id.imgProfilePic);
+            llProfileLayout = (LinearLayout) findViewById(R.id.llProfile);
+
+            // Button click listeners
+            btnSignIn.setOnClickListener(this);
+            btnSignOut.setOnClickListener(this);
+            btnRevokeAccess.setOnClickListener(this);
+        }
     }
 
     protected void onStart() {
@@ -185,6 +189,7 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
                         .getCurrentPerson(mGoogleApiClient);
 
                 app.userName = currentPerson.getDisplayName();
+                app.setUserName(this, app.userName);
                 String personPhotoUrl = currentPerson.getImage().getUrl();
                 app.userEmail = currentPerson.getUrl();
 
@@ -293,6 +298,7 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
             Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
             mGoogleApiClient.disconnect();
             mGoogleApiClient.connect();
+            app.clearUserName(this);
             updateUI(false);
         }
     }

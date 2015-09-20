@@ -6,7 +6,7 @@ package com.team_scream_mit.scream;
 
 import android.app.Application;
 import android.util.Log;
-
+import android.content.SharedPreferences;
 
 import com.parse.FindCallback;
 import com.parse.GetCallback;
@@ -24,11 +24,38 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import android.content.Context;
+import android.content.SharedPreferences.Editor;
+import android.preference.PreferenceManager;
 
 public class App extends Application
 {
     protected String userName;
     protected String userEmail;
+    static final String PREF_USER_NAME= "username";
+
+    static SharedPreferences getSharedPreferences(Context ctx) {
+        return PreferenceManager.getDefaultSharedPreferences(ctx);
+    }
+
+    public static void setUserName(Context ctx, String userName)
+    {
+        Editor editor = getSharedPreferences(ctx).edit();
+        editor.putString(PREF_USER_NAME, userName);
+        editor.commit();
+    }
+
+    public static void clearUserName(Context ctx)
+    {
+        Editor editor = getSharedPreferences(ctx).edit();
+        editor.clear(); //clear all stored data
+        editor.commit();
+    }
+
+    public static String getUserName(Context ctx)
+    {
+        return getSharedPreferences(ctx).getString(PREF_USER_NAME, "");
+    }
 
     @Override
     public void onCreate()
