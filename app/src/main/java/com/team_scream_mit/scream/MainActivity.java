@@ -59,8 +59,18 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> eventsArray;
     // eventsArray[i] has id eventIds[i]
     private ArrayList<String> eventIds;
+    private ArrayList<String> eventTitles;
+    private ArrayList<String> eventDescriptions;
+    private ArrayList<Long> eventStartTimes;
+    private ArrayList<Long> eventEndTimes;
+    private ArrayList<String> eventLocations;
     // keep track of the last removed event's id
     private String lastRemovedEventId;
+    private String lastRemovedEventTitle;
+    private String lastRemovedEventDesc;
+    private Long lastRemovedEventStartTime;
+    private Long lastRemovedEventEndTime;
+    private String lastRemovedEventLocation;
 
     // Adapter is needed for swiping.
     private ArrayAdapter<String> arrayAdapter;
@@ -84,13 +94,11 @@ public class MainActivity extends AppCompatActivity {
 
         preferenceSettings = getPreferences(PREFERENCE_MODE_PRIVATE);
 
-
-        flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
         searchCategories = getDefaultCategories();
         useSavedPreferencesIfAvailable();
 
         // dummy value for now.
-        userEmail = "kairat.ashim@gmail.com";
+
 
         like_button = (ImageButton) findViewById(R.id.like_button);
         like_button.setOnClickListener(new View.OnClickListener() {
@@ -108,8 +116,14 @@ public class MainActivity extends AppCompatActivity {
         // initialize the variables
         eventsArray = new ArrayList<>();
         eventIds = new ArrayList<>();
+        eventTitles = new ArrayList<>();
+        eventDescriptions = new ArrayList<>();
+        eventStartTimes = new ArrayList<>();
+        eventEndTimes = new ArrayList<>();
+        eventLocations = new ArrayList<>();
 
         parseApp = (App) getApplication();
+        userEmail = parseApp.userEmail;
         CallbackInterface callbackHandler = new DataReception();
         parseApp.getAllEvents(userEmail, searchCategories, daysFromToday, timeRangeFrom, timeRangeTo, callbackHandler);
 
@@ -136,19 +150,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadCards(){
+        flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
         arrayAdapter = new ArrayAdapter<>(this, R.layout.card, R.id.event_title_id, eventsArray);
-        Log.i(LOG_MESSAGE, arrayAdapter.toString());
+        //Log.i(LOG_MESSAGE, arrayAdapter.toString());
 
         flingContainer.setAdapter(arrayAdapter);
+        arrayAdapter.notifyDataSetChanged();
 
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
+                Log.d(LOG_MESSAGE, "remove handler");
                 // delete an object from the Adapter (/AdapterView)
                 eventsArray.remove(0);
                 lastRemovedEventId = eventIds.get(0);
+                lastRemovedEventTitle = eventTitles.get(0);
+                lastRemovedEventDesc = eventDescriptions.get(0);
+                lastRemovedEventStartTime = eventStartTimes.get(0);
+                lastRemovedEventEndTime = eventEndTimes.get(0);
+                lastRemovedEventLocation = eventLocations.get(0);
+                Log.d(LOG_MESSAGE, lastRemovedEventId + " - before");
                 eventIds.remove(0);
+                eventTitles.remove(0);
+                eventDescriptions.remove(0);
+                eventStartTimes.remove(0);
+                eventEndTimes.remove(0);
+                eventLocations.remove(0);
                 arrayAdapter.notifyDataSetChanged();
+                Log.d(LOG_MESSAGE, lastRemovedEventId + " - after");
             }
 
             @Override
@@ -156,15 +185,18 @@ public class MainActivity extends AppCompatActivity {
                 //Do something on the left!
                 //You also have access to the original object.
                 //If you want to use it just cast it (String) dataObject
-                makeToast(MainActivity.this, "Left!");
+                //makeToast(MainActivity.this, "Left!");
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
+                Log.d(LOG_MESSAGE, "Right swipe handler");
                 // last removed event id should not null
-                if (lastRemovedEventId != null){
+                if (lastRemovedEventId != null) {
+                    addEventToCalendar(lastRemovedEventTitle, lastRemovedEventDesc,
+                            lastRemovedEventLocation, lastRemovedEventStartTime, lastRemovedEventEndTime);
                     parseApp.addSavedEvent(userEmail, lastRemovedEventId);
-                    makeToast(MainActivity.this, "Event added to calendar!");
+                    //makeToast(MainActivity.this, "Event added to calendar!");
                 } else {
                     Log.e(LOG_MESSAGE, "Last card id is null. NOT SUPPOSED TO HAPPEN!!!");
                 }
@@ -173,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
                 // When user runs out of cards, show loading dialog and load new data from the server
-                if (itemsInAdapter == 0){
+                if (itemsInAdapter == 0) {
                     showLoadingDialog();
                     CallbackInterface callbackHandler = new DataReception();
                     parseApp.getAllEvents(userEmail, searchCategories, daysFromToday, timeRangeFrom, timeRangeTo, callbackHandler);
@@ -201,24 +233,21 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void addEventToCalendar() {
+    public void addEventToCalendar(String title, String description, String location, long startTime, long endTime) {
 
         // Signin button clicked
         Intent intent = new Intent(Intent.ACTION_INSERT);
         intent.setType("vnd.android.cursor.item/event");
 
-        Calendar cal = Calendar.getInstance();
-        long startTime = cal.getTimeInMillis();
-        long endTime = cal.getTimeInMillis()  + 60 * 60 * 1000;
 
         intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startTime);
         intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME,endTime);
         intent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true);
 
-        intent.putExtra(Events.TITLE, "Neel Birthday");
-        intent.putExtra(Events.DESCRIPTION,  "This is a sample description");
-        intent.putExtra(Events.EVENT_LOCATION, "My Guest House");
-        intent.putExtra(Events.RRULE, "FREQ=YEARLY");
+        intent.putExtra(Events.TITLE, title);
+        intent.putExtra(Events.DESCRIPTION,  description);
+        intent.putExtra(Events.EVENT_LOCATION, location);
+        //intent.putExtra(Events.RRULE, "FREQ=ONCE");
 
         startActivity(intent);
     }
@@ -333,7 +362,7 @@ public class MainActivity extends AppCompatActivity {
                     long eventStartInSec = entry.getLong("start");
                     long eventEndInSec = entry.getLong("end");
                     String eventLocation = entry.getString("location");
-                    String eventId = entry.getString("objectId");
+                    String eventId = entry.getObjectId();
                     Date eventStartDate = new Date(eventStartInSec * 1000);
                     Date eventEndDate = new Date(eventEndInSec * 1000);
                     String formattedDate = getFormattedDate(eventStartDate, eventEndDate);
@@ -342,9 +371,15 @@ public class MainActivity extends AppCompatActivity {
 
                     eventsArray.add(eventText);
                     eventIds.add(eventId);
+                    eventTitles.add(eventTitle);
+                    eventDescriptions.add((entry.getString("description")));
+                    eventStartTimes.add(eventStartInSec*1000);
+                    eventEndTimes.add(eventEndInSec*1000);
+                    eventLocations.add(eventLocation);
                 }
                 progress.dismiss();
-                Log.i(LOG_MESSAGE, eventsArray.toString());
+                //Log.i(LOG_MESSAGE, eventsArray.toString());
+                Log.d(LOG_MESSAGE, eventIds.toString());
                 loadCards();
             }
         }
