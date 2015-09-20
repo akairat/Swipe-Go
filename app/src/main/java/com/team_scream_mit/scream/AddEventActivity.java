@@ -133,7 +133,7 @@ public class AddEventActivity extends AppCompatActivity {
             c.set(Calendar.HOUR, endTimeHour);
             c.set(Calendar.MINUTE, endTimeMin);
             long end = c.getTimeInMillis();
-            long end_sec = (long) start/1000;
+            long end_sec = (long) end/1000;
             new_event.put("start", start_sec);
             new_event.put("end", end_sec);
             parseApp.addNewEvent(new_event);
@@ -141,7 +141,7 @@ public class AddEventActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        parseApp.addNewEvent(new_event);
+        finish();
 
     }
 }
