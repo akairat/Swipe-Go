@@ -150,7 +150,12 @@ public class App extends Application
                 }
                 if (user != null && e == null) {
                     //Get the list of events that already have been added
-                    ArrayList<String> added_events = (ArrayList<String>) user.get("added_events");
+                    ArrayList<String> added_events = new ArrayList<String>();
+
+                    if (user.get("added_events") != null) {
+                        added_events = (ArrayList<String>) user.get("added_events");
+                    }
+
                     Log.i("Dana tag", "GOT SOME USER");
                     Log.i("Dana tag", user.get("name").toString());
 

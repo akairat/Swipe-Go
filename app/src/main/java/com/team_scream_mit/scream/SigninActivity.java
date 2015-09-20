@@ -105,7 +105,6 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
         }
     }
 
-
     protected void onStop() {
         super.onStop();
     }
