@@ -219,6 +219,8 @@ public class App extends Application
             mGoogleApiClient.disconnect();
             mGoogleApiClient.connect();
             clearUserName(this);
+            Intent intent = new Intent(this, SigninActivity.class);
+            startActivity(intent);
         }
     }
 
