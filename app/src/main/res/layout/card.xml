@@ -1,35 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_gravity="center"
-    android:layout_width="350dp"
-    android:layout_height="170dp">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/helloText"
-        android:textSize="40sp"
-        android:textColor="@android:color/white"
-        android:background="#E339"
-        android:gravity="center"
-        tools:text="@string/hello_world"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/border1">
 
-    <ImageView
-        android:id="@+id/item_swipe_left_indicator"
-        android:alpha="0"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_margin="10dp"
-        android:src="@drawable/conf_cross" />
+        <TextView
+            android:id="@+id/event_title_id"
+            android:textSize="40sp"
+            android:textColor="#A31F34"
+            android:background="#FFFFFF"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Yelp Tech Talk"
+            android:layout_margin="6dp" />
 
-    <ImageView
-        android:id="@+id/item_swipe_right_indicator"
-        android:alpha="0"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_margin="10dp"
-        android:layout_gravity="right"
-        android:src="@drawable/conf_check" />
+        <TextView
+            android:textSize="40sp"
+            android:textColor="@android:color/black"
+            android:background="#FFFFFF"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Date/Time:"
+            android:layout_margin="6dp"/>
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/event_time_id"
+            android:textSize="30sp"
+            android:textColor="#A31F34"
+            android:background="#FFFFFF"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thursday, February 5, 2015 - 5:30pm"
+            android:width="50dp"
+            android:layout_margin="6dp"/>
+
+        <TextView
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:background="#FFFFFF"
+            android:gravity="center"
+            android:text="Location:"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_margin="6dp"/>
+
+        <TextView
+            android:id="@+id/event_location_id"
+            android:textSize="30sp"
+            android:textColor="#A31F34"
+            android:background="#FFFFFF"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Goodell Hall, 5th floor lounge"
+            android:layout_margin="6dp"/>
+
+        <View
+            android:id="@+id/item_swipe_left_indicator"
+            android:alpha="0"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="30dp"
+            android:background="#98ff98" />
+
+        <View
+            android:id="@+id/item_swipe_right_indicator"
+            android:alpha="0"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="30dp"
+            android:layout_gravity="right" />
+    </LinearLayout>
+
+</LinearLayout>
