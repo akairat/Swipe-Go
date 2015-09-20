@@ -14,6 +14,7 @@
 
         <TextView
             android:id="@+id/event_title_id"
+            android:layout_height="fill_parent"
             android:background="#E3CEF6"
             android:padding="20px"
             android:textSize="30sp"
@@ -21,8 +22,7 @@
             android:textStyle="bold"
             android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Eastgate Book Club, Sunday, September 27, 15:00-16:00, Eastgate Penthouse Room number E-55"
+            android:text="Eastgate Book Club, Sunday, September 27, 15:00-16:00, Eastgate Penthouse Room number E-55Eastgate Book Club, Sunday, September 27, 15:00-16:00, Eastgate Penthouse Room number E-55"
             />
 
     </LinearLayout>
