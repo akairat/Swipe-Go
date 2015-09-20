@@ -246,7 +246,8 @@ public class MainActivity extends AppCompatActivity {
             startActivity(i);
             return true;
         } else if (id == R.id.logout){
-            //signoutFromApp();
+            parseApp.signOutFromGplus();
+            finish();
             return true;
         } else if (id == R.id.main_screen){
             return true;

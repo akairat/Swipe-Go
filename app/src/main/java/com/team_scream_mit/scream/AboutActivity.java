@@ -8,10 +8,14 @@ import android.view.MenuItem;
 
 public class AboutActivity extends AppCompatActivity {
 
+    private App parseApp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
+
+        parseApp = (App) getApplication();
     }
 
     @Override
@@ -39,7 +43,8 @@ public class AboutActivity extends AppCompatActivity {
         } else if (id == R.id.about){
             return true;
         } else if (id == R.id.logout){
-            //signoutFromApp();
+            parseApp.signOutFromGplus();
+            finish();
             return true;
         } else if (id == R.id.main_screen){
             Intent i = new Intent(this, MainActivity.class);

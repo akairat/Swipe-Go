@@ -11,10 +11,14 @@ import android.widget.Spinner;
 
 public class AddEventActivity extends AppCompatActivity {
 
+    private App parseApp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
+
+        parseApp = (App) getApplication();
     }
 
     @Override
@@ -42,7 +46,8 @@ public class AddEventActivity extends AppCompatActivity {
             startActivity(i);
             return true;
         } else if (id == R.id.logout){
-            //signoutFromApp();
+            parseApp.signOutFromGplus();
+            finish();
             return true;
         } else if (id == R.id.main_screen){
             Intent i = new Intent(this, MainActivity.class);

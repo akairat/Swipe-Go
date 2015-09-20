@@ -20,6 +20,7 @@ public class PreferencesActivity extends AppCompatActivity {
     private SharedPreferences preferenceSettings;
     private SharedPreferences.Editor preferencesEditor;
     private static final int PREFERENCE_MODE_PRIVATE = 0;
+    private App parseApp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,8 @@ public class PreferencesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_preferences);
         preferenceSettings = getPreferences(PREFERENCE_MODE_PRIVATE);
         preferencesEditor = preferenceSettings.edit();
+
+        parseApp = (App) getApplication();
     }
 
     @Override
@@ -54,7 +57,8 @@ public class PreferencesActivity extends AppCompatActivity {
             startActivity(i);
             return true;
         } else if (id == R.id.logout){
-            //signoutFromApp();
+            parseApp.signOutFromGplus();
+            finish();
             return true;
         } else if (id == R.id.main_screen){
             Intent i = new Intent(this, MainActivity.class);
