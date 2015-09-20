@@ -26,10 +26,11 @@
             app:max_visible="4"/>
 
         <include layout="@layout/buttons"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_height="150dp"
             android:layout_below="@+id/frame"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:layout_alignParentBottom="true"/>
 
     </LinearLayout>
 </RelativeLayout>

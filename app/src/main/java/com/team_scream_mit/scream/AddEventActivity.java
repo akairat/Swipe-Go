@@ -9,6 +9,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 public class AddEventActivity extends AppCompatActivity {
 
     private App parseApp;
@@ -107,5 +114,34 @@ public class AddEventActivity extends AppCompatActivity {
         String contact = contactField.getText().toString();
 
         //TODO: SEND TO SERVER
+
+        JSONObject new_event = new JSONObject();
+        try {
+            new_event.put("title", title);
+            new_event.put("location", location);
+            new_event.put("description", description);
+            new_event.put("contact", contact);
+            new_event.put("category", evenType);
+            Calendar c = GregorianCalendar.getInstance();
+            c.set(Calendar.YEAR, dateYear);
+            c.set(Calendar.MONTH, dateMonth - 1); // 11 = december
+            c.set(Calendar.DAY_OF_MONTH, dateDay); // new years eve
+            c.set(Calendar.HOUR, startTimeHour);
+            c.set(Calendar.MINUTE, startTimeMin);
+            long start = c.getTimeInMillis();
+            long start_sec = (long) start/1000;
+            c.set(Calendar.HOUR, endTimeHour);
+            c.set(Calendar.MINUTE, endTimeMin);
+            long end = c.getTimeInMillis();
+            long end_sec = (long) end/1000;
+            new_event.put("start", start_sec);
+            new_event.put("end", end_sec);
+            parseApp.addNewEvent(new_event);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        finish();
+
     }
 }

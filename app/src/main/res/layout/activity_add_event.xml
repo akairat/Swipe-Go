@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:bootstrap="http://schemas.android.com/apk/res-auto"
-    tools:context="com.team_scream_mit.scream.AddEventActivity"
-    android:background="@drawable/blue_back">
+    tools:context="com.team_scream_mit.scream.AddEventActivity">
+
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -174,7 +174,7 @@
             android:text="Create this event"
             android:textSize="20dp"
             android:background="#9370DB"
-            />
+            android:onClick="createNewEvent"/>
     </LinearLayout>
 
 </RelativeLayout>
