@@ -1,7 +1,9 @@
 package com.team_scream_mit.scream;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,19 +17,8 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
+import com.parse.ParseObject;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,33 +27,63 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
+    // progress dialog while we load the data from the server
+    private ProgressDialog progress;
+
+    // Use SharedPreferences to access user's saved preferences.
+    private SharedPreferences preferenceSettings;
+    private static final int PREFERENCE_MODE_PRIVATE = 0;
+
+    // use App to load the events data from the server
     private App parseApp;
 
+    // need user email
+    private String userEmail;
+
+    // 5, 9 and 9 are default values
+    private int daysFromToday = 5;
+    private double timeRangeFrom = 9.00;
+    private double timeRangeTo = 9.00;
     private ArrayList<String> searchCategories;
 
-    private ArrayList<String> event_titles;
-    private ArrayList<String> event_locations;
-    private ArrayList<String> event_times;
-    private int event_index;
-    private Date event_start_time;
-    private Date event_end_time;
-    private ArrayAdapter<String> arrayAdapter;
+    // Array of events
+    private ArrayList<String> eventsArray;
+    // eventsArray[i] has id eventIds[i]
+    private ArrayList<String> eventIds;
+    // keep track of the last removed event's id
+    private String lastRemovedEventId;
 
+    // Adapter is needed for swiping.
+    private ArrayAdapter<String> arrayAdapter;
     SwipeFlingAdapterView flingContainer;
+
+    // Buttons alternative to swiping
     private ImageButton like_button;
     private ImageButton dislike_button;
 
+    // Log message for debugging
     private String LOG_MESSAGE = "-KAIRAT-";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        showLoadingDialog();
+
+        preferenceSettings = getPreferences(PREFERENCE_MODE_PRIVATE);
+
+
         flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
         searchCategories = getDefaultCategories();
+        useSavedPreferencesIfAvailable();
+
+        // dummy value for now.
+        userEmail = "kairat.ashim@gmail.com";
 
         like_button = (ImageButton) findViewById(R.id.like_button);
         like_button.setOnClickListener(new View.OnClickListener() {
@@ -77,43 +98,44 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // If new preferences have been applied.
-        Intent intent = getIntent();
-        // time_range should be formatted properly i.e. ?start=2013-02-23&end=2013-02-23
-        if (intent.getExtras() != null){
-            // format of the string is the following - yyyy-MM-dd'T'HH:mm:ss
-            String start_string = intent.getStringExtra("start_time");
-            String end_string = intent.getStringExtra("end_time");
-            event_start_time = convertStringToDate(start_string);
-            event_end_time = convertStringToDate(end_string);
-        }
-
-
-        String a = "<h1>Yelp Tech Talk</h1>\n<h2>Date/Time:</h2>\n" +
-                "<p>Thursday, February 5, 2015 - 5:30pm</p>\n" +
-                "<h2>Location:</h2>\n<p>Goodell Hall, 5th floor lounge</p>";
-        Html.fromHtml(a);
-        event_titles = new ArrayList<>();
-        event_titles.add("");
-
-        arrayAdapter = new ArrayAdapter<>(this, R.layout.card, R.id.event_title_id, event_titles);
-
 
         parseApp = (App) getApplication();
-//        parseApp.getAllEvents(user_email,
-//        final ArrayList<String> categories,
-//        final int days_from_today,
-//        final int time_range_from,
-//        final int time_range_to,
-//        final CallbackInterface callback);
+        CallbackInterface callbackHandler = new DataReception();
+        parseApp.getAllEvents(userEmail, searchCategories, daysFromToday, timeRangeFrom, timeRangeTo, callbackHandler);
+
+    }
+
+    // Toast (for debugging purposes)
+    static void makeToast(Context ctx, String s){
+        Toast.makeText(ctx, s, Toast.LENGTH_SHORT).show();
+    }
+
+
+    /**
+     * Called when right swipe button clicked
+     */
+    public void rightSwipe() {
+        flingContainer.getTopCardListener().selectRight();
+    }
+
+    /**
+     * Called when left swipe button clicked
+     */
+    public void leftSwipe() {
+        flingContainer.getTopCardListener().selectLeft();
+    }
+
+    private void loadCards(){
+        arrayAdapter = new ArrayAdapter<>(this, R.layout.card, R.id.event_title_id, eventsArray);
 
         flingContainer.setAdapter(arrayAdapter);
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
-                // this is the simplest way to delete an object from the Adapter (/AdapterView)
-                Log.d("LIST", "removed object!");
-                event_titles.remove(0);
+                // delete an object from the Adapter (/AdapterView)
+                eventsArray.remove(0);
+                lastRemovedEventId = eventIds.get(0);
+                eventIds.remove(0);
                 arrayAdapter.notifyDataSetChanged();
             }
 
@@ -122,26 +144,33 @@ public class MainActivity extends AppCompatActivity {
                 //Do something on the left!
                 //You also have access to the original object.
                 //If you want to use it just cast it (String) dataObject
-                makeToast(MainActivity.this, "Left!");
+                //makeToast(MainActivity.this, "Left!");
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
-                makeToast(MainActivity.this, "Right!");
+                // last removed event id should not null
+                if (lastRemovedEventId != null){
+                    parseApp.addSavedEvent(userEmail, lastRemovedEventId);
+                    makeToast(MainActivity.this, "Event added to calendar!");
+                } else {
+                    Log.e(LOG_MESSAGE, "Last card id is null. NOT SUPPOSED TO HAPPEN!!!");
+                }
             }
 
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
-                // Ask for more data here
-                //event_titles.add("XML ".concat(String.valueOf(i)));
-                //arrayAdapter.notifyDataSetChanged();
-                //Log.d("LIST", "notified");
-                //i++;
+                // When user runs out of cards, show loading dialog and load new data from the server
+                if (itemsInAdapter == 0){
+                    showLoadingDialog();
+                    CallbackInterface callbackHandler = new DataReception();
+                    parseApp.getAllEvents(userEmail, searchCategories, daysFromToday, timeRangeFrom, timeRangeTo, callbackHandler);
+                }
             }
 
             @Override
             public void onScroll(float scrollProgressPercent) {
-                View view = flingContainer.getSelectedView();
+                //View view = flingContainer.getSelectedView();
                 //view.findViewById(R.id.item_swipe_right_indicator).setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
                 //view.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
             }
@@ -152,28 +181,11 @@ public class MainActivity extends AppCompatActivity {
         flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
+                // we can show a new dialog with the description of the event
+                // (if event has description)
                 makeToast(MainActivity.this, "Clicked!");
             }
         });
-
-    }
-
-    static void makeToast(Context ctx, String s){
-        Toast.makeText(ctx, s, Toast.LENGTH_SHORT).show();
-    }
-
-
-   // @OnClick(R.id.right)
-    public void rightSwipe() {
-        /**
-         * Trigger the right event manually.
-         */
-        flingContainer.getTopCardListener().selectRight();
-    }
-
-    //@OnClick(R.id.left)
-    public void leftSwipe() {
-        flingContainer.getTopCardListener().selectLeft();
     }
 
 
@@ -204,8 +216,12 @@ public class MainActivity extends AppCompatActivity {
      * @return default categories - all
      */
     private ArrayList<String> getDefaultCategories(){
-        String[] cats = {"Tech Talks", "Study Breaks", "Parties", "Info Sessions"};
+        String[] cats = {"Study breaks", "Concerts", "Parties", "Info Sessions", "Seminars"};
         return new ArrayList<String>(Arrays.asList(cats));
+    }
+
+    private int defaultDaysFromToday(){
+        return 5;
     }
 
 
@@ -231,6 +247,122 @@ public class MainActivity extends AppCompatActivity {
             Log.e(LOG_MESSAGE, "Could not convert string to date object: " + string_date);
         }
         return converted_date;
+    }
+
+    private void useSavedPreferencesIfAvailable(){
+        int dft = preferenceSettings.getInt("daysFromToday", -1);
+        int sth = preferenceSettings.getInt("startTimeHour", -1);
+        int stm = preferenceSettings.getInt("startTimeMin", -1);
+        int eth = preferenceSettings.getInt("endTimeHour", -1);
+        int etm = preferenceSettings.getInt("endTimeMin", -1);
+        Set<String> sc = preferenceSettings.getStringSet("selectedCategories", null);
+
+        if (dft != -1){
+            daysFromToday = dft;
+        }
+        if (sth != -1 && stm != -1){
+            timeRangeFrom = sth + stm*1.0/60;
+        }
+        if (eth != -1 && etm != -1){
+            timeRangeTo = eth + etm*1.0/60;
+        }
+        if (sc != null){
+            searchCategories = new ArrayList<>(sc);
+        }
+    }
+
+    private class DataReception implements CallbackInterface{
+        @Override
+        public void onFindEventsFinished(List<ParseObject> events) {
+            String eventText;
+            for (int i = 0; i < events.size(); i++){
+                ParseObject entry = events.get(i);
+                String eventTitle = entry.getString("title");
+                long eventStartInSec = entry.getLong("start");
+                long eventEndInSec = entry.getLong("end");
+                String eventLocation = entry.getString("location");
+                String eventId = entry.getString("objectId");
+                Date eventStartDate = new Date(eventStartInSec*1000);
+                Date eventEndDate = new Date(eventEndInSec*1000);
+                String formattedDate = getFormattedDate(eventStartDate, eventEndDate);
+
+                eventText = eventTitle + "\n" + formattedDate + ",\n" + eventLocation;
+
+                eventsArray.add(eventText);
+                eventIds.add(eventId);
+            }
+            progress.dismiss();
+            loadCards();
+        }
+    }
+
+    private String getFormattedDate(Date start_date, Date end_date){
+        Calendar cal = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        cal.setTime(start_date);
+        cal2.setTime(end_date);
+        int monthNum = cal.get(Calendar.MONTH);
+        String yearNum = Integer.toString(cal.get(Calendar.YEAR));
+        String dayNum = Integer.toString(cal.get(Calendar.DAY_OF_MONTH));
+        String weekDayName = getWeekdayName(cal.get(Calendar.DAY_OF_WEEK));
+        String start_hourNum = Integer.toString(cal.get(Calendar.HOUR_OF_DAY));
+        String end_hourNum = Integer.toString(cal2.get(Calendar.HOUR_OF_DAY));
+        String start_minuteNum = Integer.toString(cal.get(Calendar.MINUTE));
+        if (start_minuteNum.length() == 1){
+            start_minuteNum = "0" + start_minuteNum;
+        }
+        String end_minuteNum = Integer.toString(cal2.get(Calendar.MINUTE));
+        if (end_minuteNum.length() == 1){
+            end_minuteNum = "0" + end_minuteNum;
+        }
+        String monthName = getMonthName(monthNum);
+
+        String formattedDate = weekDayName + ", " + monthName + " " + dayNum
+                + ", " + start_hourNum + ":" + start_minuteNum + " - "
+                + end_hourNum + ":" + end_minuteNum;
+
+        return formattedDate;
+    }
+
+    /**
+     *
+     * @param monthNum number of the month in a year [0-11]
+     * @return name of the month
+     */
+    private String getMonthName(int monthNum){
+        String monthName = "wrong";
+        DateFormatSymbols dfs = new DateFormatSymbols();
+        String[] months = dfs.getMonths();
+        if (monthNum >= 0 && monthNum <= 11){
+            monthName = months[monthNum];
+        } else {
+            Log.e(LOG_MESSAGE, "Wrong date number: " + monthNum);
+        }
+        return monthName;
+    }
+
+    /**
+     *
+     * @param weekdayNum number of the day in the week [0-6]
+     * @return name of the day of the week
+     */
+    private String getWeekdayName(int weekdayNum){
+        String weekdayName = "Wrong";
+        DateFormatSymbols dfs = new DateFormatSymbols();
+        String[] weekdays = dfs.getWeekdays();
+        if (weekdayNum >= 0 && weekdayNum <= 6){
+            weekdayName = weekdays[weekdayNum];
+        } else {
+            Log.e(LOG_MESSAGE, "Wrong weekday number: " + weekdayNum);
+        }
+        return weekdayName;
+    }
+
+    private void showLoadingDialog(){
+        ProgressDialog progress = new ProgressDialog(this);
+        progress.setTitle("Loading");
+        progress.setMessage("Wait while loading...");
+        progress.show();
     }
 
     ///////////////////////////////// OLD CODE /////////////////////////////////////////

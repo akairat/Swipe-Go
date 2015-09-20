@@ -42,4 +42,5 @@
     <string name="AddEventSponsor">Sponsor</string>
     <string name="AddEventContact">Contact:</string>
     <string name="categoryType">Please choose your event category</string>
+    <string name="categoryType1">Please choose your event category</string>
 </resources>
