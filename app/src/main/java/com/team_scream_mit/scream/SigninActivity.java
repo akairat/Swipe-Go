@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import java.io.InputStream;
 
 import android.content.Intent;
-import android.provider.CalendarContract;
 import android.content.IntentSender.SendIntentException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,8 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.util.Calendar;
-import android.provider.CalendarContract.Events;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -110,25 +107,6 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_sign_in:
-
-                // Signin button clicked
-                Intent intent = new Intent(Intent.ACTION_INSERT);
-                intent.setType("vnd.android.cursor.item/event");
-
-                Calendar cal = Calendar.getInstance();
-                long startTime = cal.getTimeInMillis();
-                long endTime = cal.getTimeInMillis()  + 60 * 60 * 1000;
-
-                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startTime);
-                intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME,endTime);
-                intent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true);
-
-                intent.putExtra(Events.TITLE, "Neel Birthday");
-                intent.putExtra(Events.DESCRIPTION,  "This is a sample description");
-                intent.putExtra(Events.EVENT_LOCATION, "My Guest House");
-                intent.putExtra(Events.RRULE, "FREQ=YEARLY");
-
-                startActivity(intent);
                 signInWithGplus();
 
                 break;
