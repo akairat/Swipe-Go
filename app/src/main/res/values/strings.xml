@@ -43,11 +43,13 @@
     <string name="AddEventContact">Contact:</string>
     <string name="categoryType">Please choose your event category</string>
     <string name="categoryType1">Please choose your event category</string>
-    <string name="about">Are you bored and looking for events? \n\nThen, you\'re at the right place. \n\n
-        Events would be matched with you according to your preferences and
-    if you\'re interested, you could accept the event and add it to you phone\'s calendar by just
-    swiping to the right or reject the event swiping to the left. \n\n
-        You can update your preferences or add a new event from the side menubar. \n\n
+    <string name="about">Are you bored and looking for events to put in your schedule? \n\nThen, this app is just for you. \n\n
+        Events are be matched with you according to your preferences and
+    if you\'re interested in a certain event, you can add it to your phone's calendar with a simple
+        swipe to the right, otherwise you can skip it with a simple swipe to the left. \n\n
+        Swipe>>Go is a tinder for events. :)\n
+        You can update your preferences using the menu on the top left of the screen.\n\n
+        You can also add new events to our events database using the menu on the top left of the screen. \n\n
 
-        Just Swipe And Go ;)!</string>
+        Swipe And Go ;)!</string>
 </resources>
