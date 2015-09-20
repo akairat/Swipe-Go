@@ -80,8 +80,6 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
         else
         {
             setContentView(R.layout.activity_signin);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setIcon(R.drawable.icon_label);
 
             btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
             btnSignOut = (Button) findViewById(R.id.btn_sign_out);
