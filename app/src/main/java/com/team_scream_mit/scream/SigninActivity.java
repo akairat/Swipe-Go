@@ -70,7 +70,9 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
                 .addOnConnectionFailedListener(this).addApi(Plus.API)
                 .addScope(Plus.SCOPE_PLUS_LOGIN).build();
 
-        if(app.getUserName(this).length() == 0)
+        app.clearUserName(this);
+
+        if(app.getUserName(this).length() != 0)
         {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
