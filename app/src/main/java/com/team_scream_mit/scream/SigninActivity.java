@@ -61,8 +61,8 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
     private SignInButton btnSignIn;
     private Button btnSignOut, btnRevokeAccess;
     protected ImageView imgProfilePic;
-    protected TextView txtName, txtEmail;
     private LinearLayout llProfileLayout;
+    private App app;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,14 +75,14 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
         btnSignOut = (Button) findViewById(R.id.btn_sign_out);
         btnRevokeAccess = (Button) findViewById(R.id.btn_revoke_access);
         imgProfilePic = (ImageView) findViewById(R.id.imgProfilePic);
-        txtName = (TextView) findViewById(R.id.txtName);
-        txtEmail = (TextView) findViewById(R.id.txtEmail);
         llProfileLayout = (LinearLayout) findViewById(R.id.llProfile);
 
         // Button click listeners
         btnSignIn.setOnClickListener(this);
         btnSignOut.setOnClickListener(this);
         btnRevokeAccess.setOnClickListener(this);
+
+        app = (App) getApplication();
 
         // Initializing google plus api client
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -110,30 +110,27 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_sign_in:
-                if (mSignInClicked) {
-                    signOutFromGplus();
-                } else {
-                    signInWithGplus();
-                }
 
                 // Signin button clicked
-//                Intent intent = new Intent(Intent.ACTION_INSERT);
-//                intent.setType("vnd.android.cursor.item/event");
-//
-//                Calendar cal = Calendar.getInstance();
-//                long startTime = cal.getTimeInMillis();
-//                long endTime = cal.getTimeInMillis()  + 60 * 60 * 1000;
-//
-//                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startTime);
-//                intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME,endTime);
-//                intent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true);
-//
-//                intent.putExtra(Events.TITLE, "Neel Birthday");
-//                intent.putExtra(Events.DESCRIPTION,  "This is a sample description");
-//                intent.putExtra(Events.EVENT_LOCATION, "My Guest House");
-//                intent.putExtra(Events.RRULE, "FREQ=YEARLY");
-//
-//                startActivity(intent);
+                Intent intent = new Intent(Intent.ACTION_INSERT);
+                intent.setType("vnd.android.cursor.item/event");
+
+                Calendar cal = Calendar.getInstance();
+                long startTime = cal.getTimeInMillis();
+                long endTime = cal.getTimeInMillis()  + 60 * 60 * 1000;
+
+                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startTime);
+                intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME,endTime);
+                intent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true);
+
+                intent.putExtra(Events.TITLE, "Neel Birthday");
+                intent.putExtra(Events.DESCRIPTION,  "This is a sample description");
+                intent.putExtra(Events.EVENT_LOCATION, "My Guest House");
+                intent.putExtra(Events.RRULE, "FREQ=YEARLY");
+
+                startActivity(intent);
+                signInWithGplus();
+
                 break;
             case R.id.btn_sign_out:
                 // Signout button clicked
@@ -204,17 +201,16 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
             if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
                 Person currentPerson = Plus.PeopleApi
                         .getCurrentPerson(mGoogleApiClient);
-                String personName = currentPerson.getDisplayName();
+
+                app.userName = currentPerson.getDisplayName();
                 String personPhotoUrl = currentPerson.getImage().getUrl();
                 String personGooglePlusProfile = currentPerson.getUrl();
-                String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
+                Log.e(TAG, "Nmae:" + personGooglePlusProfile);
+                app.userEmail = Plus.AccountApi.getAccountName(mGoogleApiClient);
 
-                Log.e(TAG, "Name: " + personName + ", plusProfile: "
-                        + personGooglePlusProfile + ", email: " + email
+                Log.e(TAG, "Name: " + app.userName + ", plusProfile: "
+                        + personGooglePlusProfile + ", email: " + app.userEmail
                         + ", Image: " + personPhotoUrl);
-
-                txtName.setText(personName);
-                txtEmail.setText(email);
 
                 // by default the profile url gives 50x50 px image only
                 // we can replace the value with whatever dimension we want by

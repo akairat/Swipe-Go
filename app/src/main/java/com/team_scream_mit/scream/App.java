@@ -26,6 +26,9 @@ import java.util.List;
 
 public class App extends Application
 {
+    protected String userName;
+    protected String userEmail;
+
     @Override
     public void onCreate()
     {

@@ -169,7 +169,6 @@
             android:layout_margin="10dp"
             android:text="Create this event"
             android:textSize="20dp"
-            android:textColor="@color/white"
             android:background="#9370DB"
             />
     </LinearLayout>
