@@ -1,7 +1,9 @@
 package com.team_scream_mit.scream;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -296,24 +298,29 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onFindEventsFinished(List<ParseObject> events) {
             String eventText;
-            for (int i = 0; i < events.size(); i++){
-                ParseObject entry = events.get(i);
-                String eventTitle = entry.getString("title");
-                long eventStartInSec = entry.getLong("start");
-                long eventEndInSec = entry.getLong("end");
-                String eventLocation = entry.getString("location");
-                String eventId = entry.getString("objectId");
-                Date eventStartDate = new Date(eventStartInSec*1000);
-                Date eventEndDate = new Date(eventEndInSec*1000);
-                String formattedDate = getFormattedDate(eventStartDate, eventEndDate);
+            if (events.size() == 0){
+                progress.dismiss();
+                showAlertDialog();
+            } else {
+                for (int i = 0; i < events.size(); i++) {
+                    ParseObject entry = events.get(i);
+                    String eventTitle = entry.getString("title");
+                    long eventStartInSec = entry.getLong("start");
+                    long eventEndInSec = entry.getLong("end");
+                    String eventLocation = entry.getString("location");
+                    String eventId = entry.getString("objectId");
+                    Date eventStartDate = new Date(eventStartInSec * 1000);
+                    Date eventEndDate = new Date(eventEndInSec * 1000);
+                    String formattedDate = getFormattedDate(eventStartDate, eventEndDate);
 
-                eventText = eventTitle + "\n" + formattedDate + ",\n" + eventLocation;
+                    eventText = eventTitle + "\n" + formattedDate + ",\n" + eventLocation;
 
-                eventsArray.add(eventText);
-                eventIds.add(eventId);
+                    eventsArray.add(eventText);
+                    eventIds.add(eventId);
+                }
+                progress.dismiss();
+                loadCards();
             }
-            progress.dismiss();
-            loadCards();
         }
     }
 
@@ -380,10 +387,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showLoadingDialog(){
-        ProgressDialog progress = new ProgressDialog(this);
+        progress = new ProgressDialog(this);
         progress.setTitle("Loading");
         progress.setMessage("Wait while loading...");
         progress.show();
+    }
+
+    private void showAlertDialog(){
+        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+        alertDialog.setTitle("No events!");
+        alertDialog.setMessage("There are no events in the provided interval");
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
     }
 
     ///////////////////////////////// OLD CODE /////////////////////////////////////////
