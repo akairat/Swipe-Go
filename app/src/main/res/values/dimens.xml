@@ -8,6 +8,6 @@
 
     <dimen name="preference_left_padding">20dp</dimen>
     <dimen name="preference_text_size">9pt</dimen>
-    <dimen name="preference_text_margin">7px</dimen>
+    <dimen name="preference_text_margin">16px</dimen>
 
 </resources>
