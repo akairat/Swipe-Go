@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     // 5, 9 and 9 are default values
     private int daysFromToday = 5;
     private double timeRangeFrom = 9.00;
-    private double timeRangeTo = 9.00;
+    private double timeRangeTo = 21.00;
     private ArrayList<String> searchCategories;
 
     // Array of events
