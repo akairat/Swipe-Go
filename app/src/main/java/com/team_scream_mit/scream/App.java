@@ -134,6 +134,11 @@ public class App extends Application
                              final double time_range_to,
                              final CallbackInterface callback){
 
+        Log.d("-KAIRAT-", categories.toString());
+        Log.d("-KAIRAT-", Integer.toString(days_from_today));
+        Log.d("-KAIRAT-", Double.toString(time_range_from));
+        Log.d("-KAIRAT-", Double.toString(time_range_to));
+
         ParseQuery query = new ParseQuery("users");
         query.whereEqualTo("email", user_email);
         query.getFirstInBackground(new GetCallback<ParseObject>() {
@@ -166,7 +171,10 @@ public class App extends Application
                     long from = (long) from_d;
                     long to = (long) to_d;
 
-                    query.whereContainedIn("category", categories);
+                    Log.d("-KAIRAT-", Long.toString(from));
+                    Log.d("-KAIRAT-", Long.toString(to));
+
+                    //query.whereContainedIn("category", categories);
                     query.whereNotContainedIn("objectId", added_events);
                     query.whereLessThanOrEqualTo("end", to);
                     query.whereGreaterThanOrEqualTo("start", from);
