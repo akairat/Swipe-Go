@@ -162,7 +162,6 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
     @Override
     public void onConnected(Bundle arg0) {
         mSignInClicked = false;
-        Toast.makeText(this, "User is connected!", Toast.LENGTH_LONG).show();
 
         // Get user's information
         getProfileInformation();
@@ -244,9 +243,8 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
      * */
     private void updateUI(boolean isSignedIn) {
         if (isSignedIn) {
-//            Intent intent = new Intent(this, MainActivity.class);
-//            startActivity(intent);
-            btnSignOut.setVisibility(View.VISIBLE);
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         } else {
             btnSignIn.setVisibility(View.VISIBLE);
             btnSignOut.setVisibility(View.GONE);
