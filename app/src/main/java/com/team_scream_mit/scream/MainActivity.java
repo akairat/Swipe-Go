@@ -93,8 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
         showLoadingDialog();
 
-        preferenceSettings = PreferenceManager.getDefaultSharedPreferences(this);
-
+        preferenceSettings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         searchCategories = getDefaultCategories();
         useSavedPreferencesIfAvailable();
@@ -148,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
      * Called when left swipe button clicked
      */
     public void leftSwipe() {
-        makeToast(MainActivity.this, "search categories - " + searchCategories.toString());
+        Log.d(LOG_MESSAGE, "search categories - " + searchCategories.toString());
         flingContainer.getTopCardListener().selectLeft();
     }
 
