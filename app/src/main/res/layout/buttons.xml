@@ -2,23 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:padding="30px"
     android:background="#FFFFFF">
 
     <ImageButton
-        android:layout_width="fill_parent"
-        android:layout_height="125dp"
-        android:src="@drawable/red_cross_icon"
+        android:layout_width="150dp"
+        android:layout_margin="10px"
+        android:padding="30px"
+        android:layout_height="140dp"
+        android:src="@drawable/red_cross_icon2"
         android:scaleType="centerInside"
         android:id="@+id/dislike_button"
-        android:layout_weight="1"
         android:background="#FFFFFF"/>
 
     <ImageButton
-        android:layout_width="fill_parent"
-        android:layout_height="125dp"
-        android:src="@drawable/green_ok_icon"
+        android:layout_width="150dp"
+        android:layout_margin="10px"
+        android:padding="30px"
+        android:layout_height="match_parent"
+        android:src="@drawable/green_ok_icon2"
         android:scaleType="centerInside"
-        android:layout_weight="1"
         android:background="#FFFFFF"
         android:id="@+id/like_button"/>
 
