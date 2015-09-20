@@ -204,12 +204,9 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
 
                 app.userName = currentPerson.getDisplayName();
                 String personPhotoUrl = currentPerson.getImage().getUrl();
-                String personGooglePlusProfile = currentPerson.getUrl();
-                Log.e(TAG, "Nmae:" + personGooglePlusProfile);
-                app.userEmail = Plus.AccountApi.getAccountName(mGoogleApiClient);
+                app.userEmail = currentPerson.getUrl();
 
-                Log.e(TAG, "Name: " + app.userName + ", plusProfile: "
-                        + personGooglePlusProfile + ", email: " + app.userEmail
+                Log.e(TAG, "Name: " + app.userName + ", plusProfile: " + app.userEmail
                         + ", Image: " + personPhotoUrl);
 
                 // by default the profile url gives 50x50 px image only
