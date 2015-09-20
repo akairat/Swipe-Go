@@ -113,7 +113,7 @@ public class PreferencesActivity extends AppCompatActivity {
         //Event types (order of lists matter!!)
         Set<String> selectedCategories = new HashSet<String>();
         ArrayList<String> eventTypes = new ArrayList<String>(
-                Arrays.asList("studyBreak","concert","party", "seminar", "infoSession"));
+                Arrays.asList("Study breaks", "Concerts", "Parties", "Info Sessions", "Seminars"));
         ArrayList<Integer> eventIDs = new ArrayList<Integer>(
                         Arrays.asList( R.id.preferenceStudyBreak,R.id.preferenceConcert,
                                 R.id.preferenceParty, R.id.preferenceSeminar, R.id.preferenceInfoSession));
