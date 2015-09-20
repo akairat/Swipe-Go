@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClicked(int itemPosition, Object dataObject) {
                 // we can show a new dialog with the description of the event
                 // (if event has description)
-                makeToast(MainActivity.this, "Clicked!");
+                //makeToast(MainActivity.this, "Clicked!");
             }
         });
 

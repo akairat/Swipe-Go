@@ -11,7 +11,8 @@
         android:paddingTop="60px"
         android:padding="20px"
         android:textSize="19sp"
-        android:textColor="#443266"
-        android:gravity="center"/>
+        android:textColor="#6A0888"
+        android:gravity="center"
+        android:fontFamily="Roboto bold italic"/>
 
 </RelativeLayout>
