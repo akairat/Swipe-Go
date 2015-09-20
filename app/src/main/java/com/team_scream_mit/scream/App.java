@@ -36,6 +36,7 @@ public class App extends Application
     protected String userName;
     protected String userEmail;
     protected GoogleApiClient mGoogleApiClient;
+    protected Boolean mGooglePlusLogoutClicked = false;
     static final String PREF_USER_NAME= "username";
 
     static SharedPreferences getSharedPreferences(Context ctx) {
@@ -221,6 +222,7 @@ public class App extends Application
             mGoogleApiClient.disconnect();
             mGoogleApiClient.connect();
             clearUserName(this);
+
         }
     }
 
