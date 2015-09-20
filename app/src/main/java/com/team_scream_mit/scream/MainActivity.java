@@ -284,13 +284,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(i);
             return true;
         } else if (id == R.id.logout){
-            if (parseApp.mGoogleApiClient.isConnected()) {
-                Plus.AccountApi.clearDefaultAccount(parseApp.mGoogleApiClient);
-                parseApp.mGoogleApiClient.disconnect();
-                parseApp.mGoogleApiClient.connect();
-                parseApp.clearUserName(this);
-            }
-
+            parseApp.mGooglePlusLogoutClicked = true;
             parseApp.clearUserName(this);
             Intent intent = new Intent(this, SigninActivity.class);
             startActivity(intent);

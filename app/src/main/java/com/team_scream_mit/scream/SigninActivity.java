@@ -70,12 +70,10 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this).addApi(Plus.API)
                 .addScope(Plus.SCOPE_PLUS_LOGIN).build();
-
         if(app.getUserName(this).length() != 0)
         {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
-            finish();
         }
         else
         {
@@ -100,11 +98,15 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
         app.mGoogleApiClient.connect();
     }
 
-    protected void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
         if (app.mGoogleApiClient.isConnected()) {
             app.mGoogleApiClient.disconnect();
         }
+    }
+
+    protected void onStop() {
+        super.onStop();
     }
 
     /**
@@ -115,6 +117,10 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
         switch (v.getId()) {
             case R.id.btn_sign_in:
                 signInWithGplus();
+
+                break;
+            case R.id.btn_sign_out:
+                signOutFromGplus();
 
                 break;
         }
@@ -160,13 +166,18 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
 
     @Override
     public void onConnected(Bundle arg0) {
-        mSignInClicked = false;
+        if (app.mGooglePlusLogoutClicked) {
+            signOutFromGplus();
+            app.mGooglePlusLogoutClicked = false;
+        } else {
+            mSignInClicked = false;
 
-        // Get user's information
-        getProfileInformation();
+            // Get user's information
+            getProfileInformation();
 
-        // Update the UI after signin
-        updateUI(true);
+            // Update the UI after signin
+            updateUI(true);
+        }
     }
 
     /**
@@ -188,15 +199,6 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
                 Log.e(TAG, "Name: " + app.userName + ", plusProfile: " + app.userEmail
                         + ", Image: " + personPhotoUrl);
 
-                // by default the profile url gives 50x50 px image only
-                // we can replace the value with whatever dimension we want by
-                // replacing sz=X
-                personPhotoUrl = personPhotoUrl.substring(0,
-                        personPhotoUrl.length() - 2)
-                        + PROFILE_PIC_SIZE;
-
-                new LoadProfileImage(imgProfilePic).execute(personPhotoUrl);
-
             } else {
                 Toast.makeText(getApplicationContext(),
                         "Person information is null", Toast.LENGTH_LONG).show();
@@ -206,33 +208,6 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
         }
     }
 
-    /**
-     * Background Async task to load user profile picture from url
-     * */
-    private class LoadProfileImage extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-
-        public LoadProfileImage(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
-    }
 
     @Override
     public void onConnectionSuspended(int arg0) {
@@ -277,6 +252,15 @@ public class SigninActivity extends AppCompatActivity implements OnClickListener
                 mIntentInProgress = false;
                 app.mGoogleApiClient.connect();
             }
+        }
+    }
+
+    public void signOutFromGplus() {
+        if (app.mGoogleApiClient.isConnected()) {
+            Plus.AccountApi.clearDefaultAccount(app.mGoogleApiClient);
+            Plus.AccountApi.revokeAccessAndDisconnect(app.mGoogleApiClient);
+            app.mGoogleApiClient.disconnect();
+            app.mGoogleApiClient.connect();
         }
     }
 

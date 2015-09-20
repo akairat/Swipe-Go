@@ -36,6 +36,7 @@ public class App extends Application
     protected String userName;
     protected String userEmail;
     protected GoogleApiClient mGoogleApiClient;
+    protected Boolean mGooglePlusLogoutClicked = false;
     static final String PREF_USER_NAME= "username";
 
     static SharedPreferences getSharedPreferences(Context ctx) {
@@ -149,7 +150,12 @@ public class App extends Application
                 }
                 if (user != null && e == null) {
                     //Get the list of events that already have been added
-                    ArrayList<String> added_events = (ArrayList<String>) user.get("added_events");
+                    ArrayList<String> added_events = new ArrayList<String>();
+
+                    if (user.get("added_events") != null) {
+                        added_events = (ArrayList<String>) user.get("added_events");
+                    }
+
                     Log.i("Dana tag", "GOT SOME USER");
                     Log.i("Dana tag", user.get("name").toString());
 
@@ -229,6 +235,7 @@ public class App extends Application
             mGoogleApiClient.disconnect();
             mGoogleApiClient.connect();
             clearUserName(this);
+
         }
     }
 
